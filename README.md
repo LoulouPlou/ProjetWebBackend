@@ -6,7 +6,7 @@ Flexi Food est une application web interactive et dynamique de recettes. Ce proj
 -	Backend: WebService Rest, Spring Boot, Spring JPA, Spring RestController, Spring Repository
 -	BDD : MariaDB, SGBDR, SQL
 -	API : Axios pour les requêtes http (https://dummyjson.com/recipes)
--	
+
 ## Architecture du projet
 ![architecture](https://github.com/user-attachments/assets/20ac08bd-5951-4aeb-a822-3e9ee5b40faa)
 
