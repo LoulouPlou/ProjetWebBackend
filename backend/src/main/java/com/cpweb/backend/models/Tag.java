@@ -11,7 +11,7 @@ public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String tagName;
+    private String tagNom;
 
     public Integer getId() {
         return id;
@@ -21,11 +21,11 @@ public class Tag {
         this.id = id;
     }
 
-    public String getTagName() {
-        return tagName;
+    public String getTagNom() {
+        return tagNom;
     }
 
-    public void setTagName(String tagName) {
-        this.tagName = tagName;
+    public void setTagNom(String tagName) {
+        this.tagNom = tagNom;
     }
 }
