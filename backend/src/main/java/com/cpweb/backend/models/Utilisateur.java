@@ -10,17 +10,17 @@ public class Utilisateur {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int userid;
+    private Long id;
     private String prenom;
     private String nom;
     private String nomAffichage;
 
-    public int getId() {
-        return userid;
+    public Long getId() {
+        return id;
     }
 
-    public void setId(int userId) {
-        this.userid = userId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getPrenom() {

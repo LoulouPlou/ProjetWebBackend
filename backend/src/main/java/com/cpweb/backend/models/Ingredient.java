@@ -10,22 +10,22 @@ public class Ingredient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private String nom;
+    private Long id;
+    private String ingredientNom;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getNom() {
-        return nom;
+    public String getIngredientNom() {
+        return ingredientNom;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setIngredientNom(String ingredientNom) {
+        this.ingredientNom = ingredientNom;
     }
 }

@@ -10,15 +10,15 @@ public class Tag {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int tagId;
+    private Integer id;
     private String tagName;
 
-    public int getTagId() {
-        return tagId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setTagId(int tagId) {
-        this.tagId = tagId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getTagName() {

@@ -1,30 +1,29 @@
 package com.cpweb.backend.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Recette {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int recetteId;
+    private Long id;
     private String nomRecette;
-    private int tempsPrep;
-    private int tempsCuisson;
-    private int nbrPortion;
-    private String imageURL;
-    private int userId;
-    private int categorieId;
+    private Integer tempsPrep;
+    private Integer tempsCuisson;
+    private Integer nbrPortion;
+    private String imageUrl;
+    @ManyToOne
+    private Utilisateur user;
+    @ManyToOne
+    private Categorie categorie;
 
-    public int getRecetteId() {
-        return recetteId;
+    public Long getId() {
+        return id;
     }
 
-    public void setRecetteId(int recetteId) {
-        this.recetteId = recetteId;
+    public void setId(Long recetteId) {
+        this.id = recetteId;
     }
 
     public String getNomRecette() {
@@ -35,51 +34,35 @@ public class Recette {
         this.nomRecette = nomRecette;
     }
 
-    public int getTempsPrep() {
+    public Integer getTempsPrep() {
         return tempsPrep;
     }
 
-    public void setTempsPrep(int tempsPrep) {
+    public void setTempsPrep(Integer tempsPrep) {
         this.tempsPrep = tempsPrep;
     }
 
-    public int getTempsCuisson() {
+    public Integer getTempsCuisson() {
         return tempsCuisson;
     }
 
-    public void setTempsCuisson(int tempsCuisson) {
+    public void setTempsCuisson(Integer tempsCuisson) {
         this.tempsCuisson = tempsCuisson;
     }
 
-    public int getNbrPortion() {
+    public Integer getNbrPortion() {
         return nbrPortion;
     }
 
-    public void setNbrPortion(int nbrPortion) {
+    public void setNbrPortion(Integer nbrPortion) {
         this.nbrPortion = nbrPortion;
     }
 
-    public String getImageURL() {
-        return imageURL;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public int getCategorieId() {
-        return categorieId;
-    }
-
-    public void setCategorieId(int categorieId) {
-        this.categorieId = categorieId;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

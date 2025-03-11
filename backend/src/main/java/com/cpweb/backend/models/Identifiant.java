@@ -1,42 +1,32 @@
 package com.cpweb.backend.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Identifiant {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private int userId;
-    private String nomUtilisateur;
+    private Long id;
+    @OneToOne
+    private Utilisateur user;
+    private String courriel;
     private String motDePasse;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getUserId() {
-        return userId;
+    public String getCourriel() {
+        return courriel;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public String getNomUtilisateur() {
-        return nomUtilisateur;
-    }
-
-    public void setNomUtilisateur(String nomUtilisateur) {
-        this.nomUtilisateur = nomUtilisateur;
+    public void setCourriel(String courriel) {
+        this.courriel = courriel;
     }
 
     public String getMotDePasse() {

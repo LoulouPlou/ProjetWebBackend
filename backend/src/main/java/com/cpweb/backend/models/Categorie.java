@@ -10,15 +10,15 @@ public class Categorie {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int categorieId;
+    private Integer id;
     private String categorieNom;
 
-    public int getCategorieId() {
-        return categorieId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setCategorieId(int categorieId) {
-        this.categorieId = categorieId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getCategorieNom() {
