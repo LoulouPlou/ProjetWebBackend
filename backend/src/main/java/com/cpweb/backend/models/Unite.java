@@ -11,4 +11,20 @@ public class Unite {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String uniteNom;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getUniteNom() {
+        return uniteNom;
+    }
+
+    public void setUniteNom(String uniteNom) {
+        this.uniteNom = uniteNom;
+    }
 }
