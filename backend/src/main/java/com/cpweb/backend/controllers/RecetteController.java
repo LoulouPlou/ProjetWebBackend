@@ -49,4 +49,10 @@ public class RecetteController {
     public List<Recette> getRecetteByCategorie(Categorie categorie){
         return repo.findRecetteByCategorie(categorie);
     }
+
+    @GetMapping("/getAllRecette")
+    @ResponseBody
+    public List<Recette> getAllRecette(){
+        return repo.findAll();
+    }
 }

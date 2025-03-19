@@ -1,5 +1,6 @@
 package com.cpweb.backend.controllers;
 
+import com.cpweb.backend.models.Categorie;
 import com.cpweb.backend.models.IngredientRecette;
 import com.cpweb.backend.models.Recette;
 import com.cpweb.backend.repositories.IngredientRecetteRepository;
@@ -21,12 +22,16 @@ public class IngredientRecetteController {
         return repo.findIngredientRecetteById(id);
     }
 
-    
+
     @GetMapping("/getIngredientRecetteByRecette")
     @ResponseBody
     public List<IngredientRecette> getIngredientRecetteByRecette(Recette recette){
         return repo.findIngredientRecetteByRecette(recette);
     }
 
-    //getall
+    @GetMapping("/getAllIngredientRecette")
+    @ResponseBody
+    public List<IngredientRecette> getAllIngredientRecette(){
+        return repo.findAll();
+    }
 }

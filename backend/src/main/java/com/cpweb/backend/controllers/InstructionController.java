@@ -1,5 +1,6 @@
 package com.cpweb.backend.controllers;
 
+import com.cpweb.backend.models.Categorie;
 import com.cpweb.backend.models.Ingredient;
 import com.cpweb.backend.models.Instruction;
 import com.cpweb.backend.models.Recette;
@@ -34,5 +35,11 @@ public class InstructionController {
     @ResponseBody
     public List<Instruction> getInstructionByRecette(Recette recette){
         return repo.findInstructionByRecette(recette);
+    }
+
+    @GetMapping("/getAllInstruction")
+    @ResponseBody
+    public List<Instruction> getAllInstruction(){
+        return repo.findAll();
     }
 }

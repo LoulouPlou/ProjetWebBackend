@@ -1,5 +1,6 @@
 package com.cpweb.backend.controllers;
 
+import com.cpweb.backend.models.Categorie;
 import com.cpweb.backend.models.Ingredient;
 import com.cpweb.backend.models.Recette;
 import com.cpweb.backend.models.TagRecette;
@@ -34,5 +35,11 @@ public class TagRecetteController {
     @ResponseBody
     public List<TagRecette> getTagRecetteByRecette(Recette recette){
         return repo.findTagRecetteByRecette(recette);
+    }
+
+    @GetMapping("/getAllTagRecette")
+    @ResponseBody
+    public List<TagRecette> getAllTagRecette(){
+        return repo.findAll();
     }
 }

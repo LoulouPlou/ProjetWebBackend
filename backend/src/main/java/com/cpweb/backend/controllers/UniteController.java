@@ -1,5 +1,6 @@
 package com.cpweb.backend.controllers;
 
+import com.cpweb.backend.models.Categorie;
 import com.cpweb.backend.models.Ingredient;
 import com.cpweb.backend.models.Unite;
 import com.cpweb.backend.repositories.IngredientRepository;
@@ -26,5 +27,11 @@ public class UniteController {
     @ResponseBody
     public List<Unite> getUniteByUniteNom(String uniteNom){
         return repo.findUniteByUniteNom(uniteNom);
+    }
+
+    @GetMapping("/getAllUnite")
+    @ResponseBody
+    public List<Unite> getAllUnite(){
+        return repo.findAll();
     }
 }
