@@ -1,10 +1,8 @@
 package com.cpweb.backend.controllers;
 
 import com.cpweb.backend.models.Categorie;
-import com.cpweb.backend.models.Ingredient;
 import com.cpweb.backend.models.Recette;
 import com.cpweb.backend.models.Utilisateur;
-import com.cpweb.backend.repositories.IngredientRepository;
 import com.cpweb.backend.repositories.RecetteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

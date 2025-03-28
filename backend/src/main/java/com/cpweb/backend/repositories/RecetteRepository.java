@@ -20,5 +20,4 @@ public interface RecetteRepository extends JpaRepository<Recette, Long> {
 
     public List<Recette> findRecetteByCategorie (Categorie categorie);
 
-
 }
