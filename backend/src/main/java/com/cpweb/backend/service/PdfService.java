@@ -1,7 +1,6 @@
 package com.cpweb.backend.service;
 
 import com.cpweb.backend.models.Recette;
-import com.cpweb.backend.repositories.RecetteRepository;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import org.springframework.stereotype.Service;
@@ -12,20 +11,16 @@ import java.io.FileOutputStream;
 @Service
 public class PdfService {
 
-    private final RecetteRepository recetteRepository;
-
-    public PdfService(RecetteRepository recetteRepository){
-        this.recetteRepository = recetteRepository;
-    }
-
-    public boolean genererPDF(Long idRecette) throws Exception{
+    public boolean genererPDF(Recette recette) throws Exception{
         Document document = new Document();
         document.setPageSize(PageSize.LETTER);
 
-        Recette recette = recetteRepository.findRecetteById(idRecette);
+        String baseDir = System.getProperty("user.dir");
+        File parentDir = new File(baseDir).getParentFile();
+        File dataDir = new File(parentDir, "data");
 
         try{
-            PdfWriter.getInstance(document, new FileOutputStream("./data/tp2.pdf"));
+            PdfWriter.getInstance(document, new FileOutputStream(dataDir+"/recette.pdf"));
             document.open();
             document.setMargins(5, 5, 5, 5);
 
@@ -37,11 +32,11 @@ public class PdfService {
             Paragraph paragraph = new Paragraph("My super duper cute cat", h1);
             paragraph.setAlignment(Element.ALIGN_CENTER);
 
-            Image image = Image.getInstance("./data/meowmeow.jpg");
+            Image image = Image.getInstance(dataDir+"/meowmeow.jpg");
             image.scalePercent(40);
             image.setAlignment(Element.ALIGN_CENTER);
 
-            document.add(paragraph);
+            document.add(recipeName);
             document.add(image);
 
         }catch(Exception e){
@@ -49,17 +44,6 @@ public class PdfService {
         }
 
         document.close();
-        return new File("./data/tp2.pdf").exists();
+        return new File(dataDir+"/recette.pdf").exists();
     }
-
-    /*
-    public static void main(String[] args) throws Exception {
-
-        Long idTest = 2L;
-
-        if(genererPDF(idTest)){
-            System.out.println("PDF généré");
-        }
-    }
-    */
 }

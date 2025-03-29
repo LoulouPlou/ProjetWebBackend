@@ -31,15 +31,18 @@ public class TagRecetteController {
     public TagRecette getTagRecetteById(long id){
         return repo.findTagRecetteById(id);
     }
+
     @GetMapping("/getTagRecetteByRecette")
     @ResponseBody
     public List<TagRecette> getTagRecetteByRecette(Recette recette){
         return repo.findTagRecetteByRecette(recette);
     }
 
+    /*
     @GetMapping("/getAllTagRecette")
     @ResponseBody
     public List<TagRecette> getAllTagRecette(){
         return repo.findAll();
     }
+    */
 }
