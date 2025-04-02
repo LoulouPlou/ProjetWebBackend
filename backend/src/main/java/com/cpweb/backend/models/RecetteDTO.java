@@ -1,11 +1,9 @@
 package com.cpweb.backend.models;
 
-import jakarta.persistence.ManyToOne;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecetteDetails {
+public class RecetteDTO {
 
     private Long id;
     private String nomRecette;

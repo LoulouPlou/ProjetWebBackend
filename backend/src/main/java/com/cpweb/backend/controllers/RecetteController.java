@@ -2,8 +2,10 @@ package com.cpweb.backend.controllers;
 
 import com.cpweb.backend.models.Categorie;
 import com.cpweb.backend.models.Recette;
+import com.cpweb.backend.models.RecetteDTO;
 import com.cpweb.backend.models.Utilisateur;
 import com.cpweb.backend.repositories.RecetteRepository;
+import com.cpweb.backend.service.RecetteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,42 +17,26 @@ import java.util.List;
 public class RecetteController {
 
     @Autowired
-    RecetteRepository repo;
+    RecetteRepository recetteRepository;
 
     @PostMapping("/newRecipe")
     public Recette createRecipe(@RequestBody Recette recette){
-        repo.save(recette);
+        recetteRepository.save(recette);
 
         return recette;
     }
 
+    // AVEC SERVICE
+    @Autowired
+    RecetteService recetteService;
 
-    @GetMapping("/getRecetteById")
-    @ResponseBody
-    public Recette getRecetteById(long id){
-        return repo.findRecetteById(id);
-    }
-    @GetMapping("/getRecetteByNomRecette")
-    @ResponseBody
-    public Recette getRecetteByNomRecette(String nomRecette){
-        return repo.findRecetteByNomRecette(nomRecette);
+    @GetMapping("/getAllRecipes")
+    public List<RecetteDTO> getAll(){
+        return recetteService.getAllRecipes();
     }
 
-    @GetMapping("/getRecetteByUser")
-    @ResponseBody
-    public List<Recette> getRecetteByUser(Utilisateur utilisateur){
-        return repo.findRecetteByUser(utilisateur);
-    }
-
-    @GetMapping("/getRecetteByCategorie")
-    @ResponseBody
-    public List<Recette> getRecetteByCategorie(Categorie categorie){
-        return repo.findRecetteByCategorie(categorie);
-    }
-
-    @GetMapping("/getAllRecette")
-    @ResponseBody
-    public List<Recette> getAllRecette(){
-        return repo.findAll();
+    @GetMapping("/getRecipe/{id}")
+    public RecetteDTO getRecipe(@PathVariable Long recipeId){
+        return recetteService.getRecipeById(recipeId);
     }
 }
