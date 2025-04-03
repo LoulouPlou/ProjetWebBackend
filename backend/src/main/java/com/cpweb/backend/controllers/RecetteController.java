@@ -36,7 +36,7 @@ public class RecetteController {
     }
 
     @GetMapping("/getRecipe/{id}")
-    public RecetteDTO getRecipe(@PathVariable Long recipeId){
-        return recetteService.getRecipeById(recipeId);
+    public RecetteDTO getRecipe(@PathVariable Long id){
+        return recetteService.getRecipeById(id);
     }
 }
