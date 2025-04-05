@@ -1,10 +1,7 @@
 package com.cpweb.backend.controllers;
 
-import com.cpweb.backend.models.Categorie;
-import com.cpweb.backend.models.Ingredient;
 import com.cpweb.backend.models.Unite;
-import com.cpweb.backend.repositories.IngredientRepository;
-import com.cpweb.backend.repositories.UniteRepository;
+import com.cpweb.backend.service.UniteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,22 +13,11 @@ import java.util.List;
 public class UniteController {
 
     @Autowired
-    UniteRepository repo;
-
-    @GetMapping("/getUniteById")
-    @ResponseBody
-    public Unite getUniteById(int id){
-        return repo.findUniteById(id);
-    }
-    @GetMapping("/getUniteByUniteNom")
-    @ResponseBody
-    public List<Unite> getUniteByUniteNom(String uniteNom){
-        return repo.findUniteByUniteNom(uniteNom);
-    }
+    UniteService uniteService;
 
     @GetMapping("/getAllUnite")
     @ResponseBody
     public List<Unite> getAllUnite(){
-        return repo.findAll();
+        return uniteService.getAllUnits();
     }
 }

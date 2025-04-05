@@ -1,10 +1,7 @@
 package com.cpweb.backend.controllers;
 
-import com.cpweb.backend.models.Categorie;
-import com.cpweb.backend.models.Ingredient;
 import com.cpweb.backend.models.Tag;
-import com.cpweb.backend.repositories.IngredientRepository;
-import com.cpweb.backend.repositories.TagRepository;
+import com.cpweb.backend.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,22 +13,16 @@ import java.util.List;
 public class TagController {
 
     @Autowired
-    TagRepository repo;
-
-    @GetMapping("/getTagById")
-    @ResponseBody
-    public Tag getTagById(long id){
-        return repo.findTagById(id);
-    }
-    @GetMapping("/getTagByTagNom")
-    @ResponseBody
-    public Tag getTagByTagNom(String tagNom){
-        return repo.findTagByTagNom(tagNom);
-    }
+    TagService tagService;
 
     @GetMapping("/getAllTag")
     @ResponseBody
     public List<Tag> getAllTag(){
-        return repo.findAll();
+        return tagService.getAllTags();
+    }
+
+    @PostMapping("/newTag")
+    public void addTag(@RequestBody Tag tag){
+        tagService.createTag(tag);
     }
 }

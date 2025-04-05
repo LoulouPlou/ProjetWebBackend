@@ -1,12 +1,10 @@
 package com.cpweb.backend.controllers;
 
-import com.cpweb.backend.models.Categorie;
 import com.cpweb.backend.models.IngredientRecette;
 import com.cpweb.backend.models.Recette;
-import com.cpweb.backend.repositories.IngredientRecetteRepository;
+import com.cpweb.backend.service.IngredientRecetteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -14,24 +12,16 @@ import java.util.List;
 @CrossOrigin()
 public class IngredientRecetteController {
     @Autowired
-    IngredientRecetteRepository repo;
-
-    @GetMapping("/getIngredientRecetteById")
-    @ResponseBody
-    public IngredientRecette getIngredientRecetteById(long id){
-        return repo.findIngredientRecetteById(id);
-    }
-
-
-    @GetMapping("/getIngredientRecetteByRecette")
-    @ResponseBody
-    public List<IngredientRecette> getIngredientRecetteByRecette(Recette recette){
-        return repo.findIngredientRecetteByRecette(recette);
-    }
+    IngredientRecetteService ingredientRecetteService;
 
     @GetMapping("/getAllIngredientRecette")
     @ResponseBody
+    public List<IngredientRecette> getIngredientRecetteByRecette(Recette recette){
+        return ingredientRecetteService.findAll();
+    }
+
+    @PostMapping("/newIngredientRecette")
     public List<IngredientRecette> getAllIngredientRecette(){
-        return repo.findAll();
+        return ingredientRecetteService.findAll();
     }
 }

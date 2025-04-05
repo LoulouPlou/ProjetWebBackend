@@ -13,8 +13,6 @@ public class RecetteService {
 
     private final TagRecetteRepository tagRecetteRepository;
 
-    private final TagRepository tagRepository;
-
     private final IngredientRecetteRepository ingredientRecetteRepository;
 
     private final InstructionRepository instructionRepository;
@@ -23,77 +21,93 @@ public class RecetteService {
     public RecetteService(RecetteRepository recetteRepository, TagRecetteRepository tagRecetteRepository, TagRepository tagRepository, IngredientRecetteRepository ingredientRecetteRepository, InstructionRepository instructionRepository) {
         this.recetteRepository = recetteRepository;
         this.tagRecetteRepository = tagRecetteRepository;
-        this.tagRepository = tagRepository;
         this.ingredientRecetteRepository = ingredientRecetteRepository;
         this.instructionRepository = instructionRepository;
     }
 
     public List<RecetteDTO> getAllRecipes(){
-        List<RecetteDTO> listeRecetteDetails = new ArrayList<>();
 
-        List<Recette> listeRecette = recetteRepository.findAll();
+        List<Recette> recipeList = recetteRepository.findAll();
 
-        for (Recette recette : listeRecette){
-            RecetteDTO recetteDetails = new RecetteDTO();
-            recetteDetails.setId(recette.getId());
-            recetteDetails.setNomRecette(recette.getNomRecette());
-            recetteDetails.setCategorie(recette.getCategorie());
-            recetteDetails.setTempsPrep(recette.getTempsPrep());
-            recetteDetails.setTempsCuisson(recette.getTempsCuisson());
-            recetteDetails.setImageUrl(recette.getImageUrl());
-            recetteDetails.setNbrPortion(recette.getNbrPortion());
+        return transformRecipeListIntoRecipeDtoList(recipeList);
+    }
 
-            List<TagRecette> listeTagRecette = tagRecetteRepository.findTagRecetteByRecette(recette);
-            for (TagRecette tagRecette : listeTagRecette){
-                Tag tag = tagRecette.getTag();
-                recetteDetails.getTags().add(tag.getTagNom());
-            }
+    public List<RecetteDTO> getAllRecipesByCategory(Categorie categorie){
 
-            List<IngredientRecette> listeIngredientRecette = ingredientRecetteRepository.findIngredientRecetteByRecette(recette);
-            for (IngredientRecette ingredientRecette : listeIngredientRecette){
-                Ingredient ingredient = ingredientRecette.getIngredient();
-                Unite unite = ingredientRecette.getUnite();
-                recetteDetails.getIngredients().add(ingredientRecette.getQuantite() + " " + unite.getUniteNom() + " "+ ingredient.getIngredientNom());
-            }
+        List<Recette> recipeList = recetteRepository.findRecetteByCategorie(categorie);
 
-            List<Instruction> listeInstruction = instructionRepository.findInstructionByRecette(recette);
-            for (Instruction instruction : listeInstruction){
-                recetteDetails.getEtapes().add(instruction.getNumEtape()+". " + instruction.getDescription());
-            }
-
-            listeRecetteDetails.add(recetteDetails);
-        }
-        return listeRecetteDetails;
+        return transformRecipeListIntoRecipeDtoList(recipeList);
     }
 
     public RecetteDTO getRecipeById(Long recetteId){
 
-        Recette recette = recetteRepository.findRecetteById(recetteId);
+        Recette recipe = recetteRepository.findRecetteById(recetteId);
 
-        RecetteDTO recetteDetails = new RecetteDTO();
-        recetteDetails.setId(recette.getId());
-        recetteDetails.setNomRecette(recette.getNomRecette());
-        recetteDetails.setCategorie(recette.getCategorie());
-        recetteDetails.setTempsPrep(recette.getTempsPrep());
-        recetteDetails.setTempsCuisson(recette.getTempsCuisson());
-        recetteDetails.setImageUrl(recette.getImageUrl());
-        recetteDetails.setNbrPortion(recette.getNbrPortion());
-        List<TagRecette> listeTagRecette = tagRecetteRepository.findTagRecetteByRecette(recette);
+        RecetteDTO recipeWithDetails = new RecetteDTO();
+        recipeWithDetails.setId(recipe.getId());
+        recipeWithDetails.setNomRecette(recipe.getNomRecette());
+        recipeWithDetails.setCategorie(recipe.getCategorie());
+        recipeWithDetails.setTempsPrep(recipe.getTempsPrep());
+        recipeWithDetails.setTempsCuisson(recipe.getTempsCuisson());
+        recipeWithDetails.setImageUrl(recipe.getImageUrl());
+        recipeWithDetails.setNbrPortion(recipe.getNbrPortion());
+        List<TagRecette> listeTagRecette = tagRecetteRepository.findTagRecetteByRecette(recipe);
         for (TagRecette tagRecette : listeTagRecette){
             Tag tag = tagRecette.getTag();
-            recetteDetails.getTags().add(tag.getTagNom());
+            recipeWithDetails.getTags().add(tag.getTagNom());
         }
-        List<IngredientRecette> listeIngredientRecette = ingredientRecetteRepository.findIngredientRecetteByRecette(recette);
+        List<IngredientRecette> listeIngredientRecette = ingredientRecetteRepository.findIngredientRecetteByRecette(recipe);
         for (IngredientRecette ingredientRecette : listeIngredientRecette){
             Ingredient ingredient = ingredientRecette.getIngredient();
             Unite unite = ingredientRecette.getUnite();
-            recetteDetails.getIngredients().add(ingredientRecette.getQuantite() + " " + unite.getUniteNom() + " "+ ingredient.getIngredientNom());
+            recipeWithDetails.getIngredients().add(ingredientRecette.getQuantite() + " " + unite.getUniteNom() + " "+ ingredient.getIngredientNom());
         }
-        List<Instruction> listeInstruction = instructionRepository.findInstructionByRecette(recette);
+        List<Instruction> listeInstruction = instructionRepository.findInstructionByRecette(recipe);
         for (Instruction instruction : listeInstruction){
-            recetteDetails.getEtapes().add(instruction.getNumEtape()+". " + instruction.getDescription());
+            recipeWithDetails.getEtapes().add(instruction.getNumEtape()+". " + instruction.getDescription());
         }
 
-        return recetteDetails;
+        return recipeWithDetails;
+    }
+
+    public List<RecetteDTO> transformRecipeListIntoRecipeDtoList(List<Recette> recipes){
+        List<RecetteDTO> recipeListWithDetails = new ArrayList<>();
+
+        for (Recette recipe : recipes){
+            RecetteDTO recipeWithDetails = new RecetteDTO();
+            recipeWithDetails.setId(recipe.getId());
+            recipeWithDetails.setNomRecette(recipe.getNomRecette());
+            recipeWithDetails.setCategorie(recipe.getCategorie());
+            recipeWithDetails.setTempsPrep(recipe.getTempsPrep());
+            recipeWithDetails.setTempsCuisson(recipe.getTempsCuisson());
+            recipeWithDetails.setImageUrl(recipe.getImageUrl());
+            recipeWithDetails.setNbrPortion(recipe.getNbrPortion());
+
+            List<TagRecette> listeTagRecette = tagRecetteRepository.findTagRecetteByRecette(recipe);
+            for (TagRecette tagRecette : listeTagRecette){
+                Tag tag = tagRecette.getTag();
+                recipeWithDetails.getTags().add(tag.getTagNom());
+            }
+
+            List<IngredientRecette> listeIngredientRecette = ingredientRecetteRepository.findIngredientRecetteByRecette(recipe);
+            for (IngredientRecette ingredientRecette : listeIngredientRecette){
+                Ingredient ingredient = ingredientRecette.getIngredient();
+                Unite unite = ingredientRecette.getUnite();
+                recipeWithDetails.getIngredients().add(ingredientRecette.getQuantite() + " " + unite.getUniteNom() + " "+ ingredient.getIngredientNom());
+            }
+
+            List<Instruction> listeInstruction = instructionRepository.findInstructionByRecette(recipe);
+            for (Instruction instruction : listeInstruction){
+                recipeWithDetails.getEtapes().add(instruction.getNumEtape()+". " + instruction.getDescription());
+            }
+
+            recipeListWithDetails.add(recipeWithDetails);
+        }
+
+        return recipeListWithDetails;
+    }
+
+    public Long createRecipe(Recette recipe){
+        return recetteRepository.save(recipe).getId();
     }
 }

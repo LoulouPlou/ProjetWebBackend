@@ -1,8 +1,7 @@
 package com.cpweb.backend.controllers;
 
-import com.cpweb.backend.models.Categorie;
 import com.cpweb.backend.models.Ingredient;
-import com.cpweb.backend.repositories.IngredientRepository;
+import com.cpweb.backend.service.IngredientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,22 +13,22 @@ import java.util.List;
 public class IngredientController {
 
     @Autowired
-    IngredientRepository repo;
+    IngredientService ingredientService;
 
-    @GetMapping("/getIngredientById")
-    @ResponseBody
-    public Ingredient getIngredientById(long id){
-        return repo.findIngredientById(id);
-    }
     @GetMapping("/getIngredientByNom")
     @ResponseBody
-    public Ingredient getIngredientByNom(String ingredientNom){
-        return repo.findIngredientByIngredientNom(ingredientNom);
+    public Ingredient getIngredientByNom(String name){
+        return ingredientService.getIngredientByName(name);
     }
 
     @GetMapping("/getAllIngredient")
     @ResponseBody
     public List<Ingredient> getAllIngredient(){
-        return repo.findAll();
+        return ingredientService.findAll();
+    }
+
+    @PostMapping("/newIngredient")
+    public void addIngredient(@RequestBody Ingredient ingredient){
+        ingredientService.createIngredient(ingredient);
     }
 }
