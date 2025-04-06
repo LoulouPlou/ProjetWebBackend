@@ -2,7 +2,7 @@ package com.cpweb.backend.controllers;
 
 import com.cpweb.backend.models.Recette;
 import com.cpweb.backend.models.RecetteDTO;
-import com.cpweb.backend.service.RecetteService;
+import com.cpweb.backend.service.RecetteDTOService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,21 +14,21 @@ import java.util.List;
 public class RecetteController {
 
     @Autowired
-    RecetteService recetteService;
+    RecetteDTOService recetteDTOService;
 
     @GetMapping("/getAllRecipes")
     @ResponseBody
     public List<RecetteDTO> getAll(){
-        return recetteService.getAllRecipes();
+        return recetteDTOService.getAllRecipes();
     }
 
     @GetMapping("/getRecipe/{id}")
     public RecetteDTO getRecipe(@PathVariable Long id){
-        return recetteService.getRecipeById(id);
+        return recetteDTOService.getRecipeById(id);
     }
 
     @PostMapping("/newRecipe")
-    public Long createRecipe(@RequestBody Recette recette){
-        return recetteService.createRecipe(recette);
+    public Long createRecipe(@RequestBody RecetteDTO recetteDTO){
+        return recetteDTOService.createRecipeAndDetailsFromRecipeDTO(recetteDTO);
     }
 }

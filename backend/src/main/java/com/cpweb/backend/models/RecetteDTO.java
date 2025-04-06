@@ -13,9 +13,9 @@ public class RecetteDTO {
     private String imageUrl;
     private Utilisateur user;
     private Categorie categorie;
-    private List<String> tags = new ArrayList<>();
-    private List<String> ingredients = new ArrayList<>();
-    private List<String> etapes = new ArrayList<>();
+    private List<TagRecette> tags = new ArrayList<>();
+    private List<IngredientRecetteDTO> ingredients = new ArrayList<>();
+    private List<Instruction> etapes = new ArrayList<>();
 
 
     public Long getId() {
@@ -82,27 +82,27 @@ public class RecetteDTO {
         this.categorie = categorie;
     }
 
-    public List<String> getTags() {
+    public List<TagRecette> getTags() {
         return tags;
     }
 
-    public void setTags(List<String> tags) {
+    public void setTags(List<TagRecette> tags) {
         this.tags = tags;
     }
 
-    public List<String> getEtapes() {
-        return etapes;
-    }
-
-    public void setEtapes(List<String> etapes) {
-        this.etapes = etapes;
-    }
-
-    public List<String> getIngredients() {
+    public List<IngredientRecetteDTO> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(List<String> ingredients) {
+    public void setIngredients(List<IngredientRecetteDTO> ingredients) {
         this.ingredients = ingredients;
+    }
+
+    public List<Instruction> getEtapes() {
+        return etapes;
+    }
+
+    public void setEtapes(List<Instruction> etapes) {
+        this.etapes = etapes;
     }
 }
