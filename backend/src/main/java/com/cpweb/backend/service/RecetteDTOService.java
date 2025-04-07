@@ -39,12 +39,22 @@ public class RecetteDTOService {
 
     public Long createRecipeAndDetailsFromRecipeDTO(RecetteDTO recetteDTO) {
         Recette recipe = recipeDtoToRecipe(recetteDTO);
+        Long recipeId = recetteRepository.save(recipe).getId();
+        recipe = recetteRepository.findRecetteById(recipeId); // qu'il comprenne le id
 
         List<Instruction> instructions = new ArrayList<>(recetteDTO.getEtapes());
-        instructionRepository.saveAll(instructions);
+        for (Instruction instruction : instructions){
+            instruction.setRecette(recipe);
+
+            instructionRepository.save(instruction);
+        }
 
         List<TagRecette> tags = new ArrayList<>(recetteDTO.getTags());
-        tagRecetteRepository.saveAll(tags);
+        for (TagRecette tagRecette : tags){
+            tagRecette.setRecette(recipe);
+
+            tagRecetteRepository.save(tagRecette);
+        }
 
         List<IngredientRecetteDTO> ingredients = new ArrayList<>(recetteDTO.getIngredients());
         for (IngredientRecetteDTO ingredient : ingredients) {
@@ -68,7 +78,7 @@ public class RecetteDTOService {
             ingredientRecetteRepository.save(recipeIngredient);
         }
 
-        return recetteRepository.save(recipe).getId();
+        return recipeId;
     }
 
     public List<RecetteDTO> getAllRecipes(){
@@ -113,7 +123,21 @@ public class RecetteDTOService {
         recipeWithDetails.setNbrPortion(recipe.getNbrPortion());
         recipeWithDetails.setTags(tagRecetteRepository.findTagRecetteByRecette(recipe));
         recipeWithDetails.setEtapes(instructionRepository.findInstructionByRecette(recipe));
-        //recipeWithDetails.setIngredients(ingredientRecetteRepository.findIngredientRecetteByRecette(recipe));
+
+        List<IngredientRecetteDTO> ingredientsDetails = new ArrayList<>();
+        List<IngredientRecette> ingredientsRecipe = ingredientRecetteRepository.findIngredientRecetteByRecette(recipe);
+
+        for (IngredientRecette ingredientRecipe : ingredientsRecipe){
+            IngredientRecetteDTO ingredientRecetteDTO = new IngredientRecetteDTO();
+
+            ingredientRecetteDTO.setIngredientNom(ingredientRecipe.getIngredient().getIngredientNom());
+            ingredientRecetteDTO.setUniteNom(ingredientRecipe.getUnite().getUniteNom());
+            ingredientRecetteDTO.setQuantite(ingredientRecipe.getQuantite());
+
+            ingredientsDetails.add(ingredientRecetteDTO);
+        }
+
+        recipeWithDetails.setIngredients(ingredientsDetails);
 
         return recipeWithDetails;
     }
