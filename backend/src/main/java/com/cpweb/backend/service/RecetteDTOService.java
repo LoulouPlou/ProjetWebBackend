@@ -45,7 +45,6 @@ public class RecetteDTOService {
         List<Instruction> instructions = new ArrayList<>(recetteDTO.getEtapes());
         for (Instruction instruction : instructions){
             instruction.setRecette(recipe);
-
             instructionRepository.save(instruction);
         }
 
