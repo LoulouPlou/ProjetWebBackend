@@ -1,10 +1,8 @@
 package com.cpweb.backend.controllers;
 
-import com.cpweb.backend.models.Categorie;
-import com.cpweb.backend.models.Ingredient;
 import com.cpweb.backend.models.Utilisateur;
-import com.cpweb.backend.repositories.IngredientRepository;
-import com.cpweb.backend.repositories.UtilisateurRepository;
+import com.cpweb.backend.models.UtilisateurDTO;
+import com.cpweb.backend.service.UtilisateurDTOService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,29 +14,32 @@ import java.util.List;
 public class UtilisateurController {
 
     @Autowired
-    UtilisateurRepository repo;
+    UtilisateurDTOService utilisateurDTOService;
 
     @PostMapping("/newUser")
-    public Utilisateur createUser(@RequestBody Utilisateur utilisateur){
-        repo.save(utilisateur);
-
-        return utilisateur;
+    public Long createUser(@RequestBody UtilisateurDTO utilisateurDTO){
+        return utilisateurDTOService.createUser(utilisateurDTO);
     }
 
-    @GetMapping("/getUserById")
+    @GetMapping("/getUser/{id}")
     @ResponseBody
-    public Utilisateur getUtilisateurById(long id){
-        return repo.findUtilisateurById(id);
-    }
-    @GetMapping("/getUtilisateurByNomAffichage")
-    @ResponseBody
-    public Utilisateur getUtilisateurByNomAffichage(String nomAffichage){
-        return repo.findUtilisateurByNomAffichage(nomAffichage);
+    public UtilisateurDTO getUtilisateurById(@PathVariable Long id){
+        return utilisateurDTOService.getUtilisateurById(id);
     }
 
+    @GetMapping("/getUtilisateurByNom/{nomAffichage}")
+    @ResponseBody
+    public UtilisateurDTO getUtilisateurByNomAffichage(@PathVariable String nomAffichage){
+        return utilisateurDTOService.getUtilisateurByNomAffichage(nomAffichage);
+    }
+
+
+    //Intéressant pour admin, mais manque de temps
+    /*
     @GetMapping("/getAllUtilisateur")
     @ResponseBody
     public List<Utilisateur> getAllUtilisateur(){
         return repo.findAll();
     }
+     */
 }

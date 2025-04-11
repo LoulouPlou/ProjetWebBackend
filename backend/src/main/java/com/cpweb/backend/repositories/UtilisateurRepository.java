@@ -11,7 +11,4 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long> 
 
     public Utilisateur findUtilisateurByNomAffichage(String nomAffichage);
 
-    //username perhaps would be better
-
-
 }
