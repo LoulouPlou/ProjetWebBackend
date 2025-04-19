@@ -2,8 +2,14 @@ package com.cpweb.backend.controllers;
 
 import com.cpweb.backend.models.Recette;
 import com.cpweb.backend.models.RecetteDTO;
+import com.cpweb.backend.service.PdfService;
 import com.cpweb.backend.service.RecetteDTOService;
+import com.cpweb.backend.service.RecetteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +21,11 @@ public class RecetteController {
 
     @Autowired
     RecetteDTOService recetteDTOService;
+    private final PdfService pdfService;
+
+    public RecetteController(PdfService pdfService) {
+        this.pdfService = pdfService;
+    }
 
     @GetMapping("/getAllRecipes")
     @ResponseBody
@@ -30,5 +41,17 @@ public class RecetteController {
     @PostMapping("/newRecipe")
     public Long createRecipe(@RequestBody RecetteDTO recetteDTO){
         return recetteDTOService.createRecipeAndDetailsFromRecipeDTO(recetteDTO);
+    }
+
+    @GetMapping("/getRecipePdf/{id}")
+    public ResponseEntity<byte[]> getRecipePdf(@PathVariable Long id) throws Exception {
+        byte[] pdf = pdfService.genererPDF(recetteDTOService.getRecipeById(id));
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        //changer nom
+        headers.setContentDisposition(ContentDisposition.inline().filename("recipe.pdf").build());
+
+        return ResponseEntity.ok().headers(headers).body(pdf);
     }
 }

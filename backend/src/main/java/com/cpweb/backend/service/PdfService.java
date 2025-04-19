@@ -1,49 +1,46 @@
 package com.cpweb.backend.service;
 
-import com.cpweb.backend.models.Recette;
-import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.*;
+import com.cpweb.backend.models.RecetteDTO;
+import com.itextpdf.io.font.constants.StandardFonts;
+import com.itextpdf.kernel.colors.DeviceRgb;
+import com.itextpdf.kernel.font.*;
+import com.itextpdf.kernel.geom.PageSize;
+import com.itextpdf.layout.properties.TextAlignment;
 import org.springframework.stereotype.Service;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
 
-import java.io.File;
-import java.io.FileOutputStream;
+import java.io.ByteArrayOutputStream;
 
 @Service
 public class PdfService {
 
-    public boolean genererPDF(Recette recette) throws Exception{
-        Document document = new Document();
-        document.setPageSize(PageSize.LETTER);
+    public byte[] genererPDF(RecetteDTO recette) throws Exception{
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PdfWriter writer = new PdfWriter(baos);
+        PdfDocument pdfDoc = new PdfDocument(writer);
+        pdfDoc.setDefaultPageSize(PageSize.LETTER);
+        Document document = new Document(pdfDoc);
 
-        String baseDir = System.getProperty("user.dir");
-        File parentDir = new File(baseDir).getParentFile();
-        File dataDir = new File(parentDir, "data");
+        try {
+            PdfFont fontTitle = PdfFontFactory.createFont(StandardFonts.TIMES_ROMAN);
+            PdfFont fontSubtitle = PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD);
 
-        try{
-            PdfWriter.getInstance(document, new FileOutputStream(dataDir+"/recette.pdf"));
-            document.open();
-            document.setMargins(5, 5, 5, 5);
+            Paragraph title = new Paragraph(recette.getNomRecette())
+                    .setFont(fontTitle)
+                    .setFontSize(20)
+                    .setTextAlignment(TextAlignment.CENTER);
 
-            Font h1 = FontFactory.getFont(FontFactory.TIMES_ROMAN, 20, new BaseColor(161,113,136));
-            Font h2 = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18, BaseColor.BLACK);
+            document.setMargins(20, 20, 20, 20);
+            document.add(title);
 
-            Paragraph recipeName = new Paragraph(recette.getNomRecette(), h1);
-
-            Paragraph paragraph = new Paragraph("My super duper cute cat", h1);
-            paragraph.setAlignment(Element.ALIGN_CENTER);
-
-            Image image = Image.getInstance(dataDir+"/meowmeow.jpg");
-            image.scalePercent(40);
-            image.setAlignment(Element.ALIGN_CENTER);
-
-            document.add(recipeName);
-            document.add(image);
-
-        }catch(Exception e){
+            document.close();
+            return baos.toByteArray();
+        } catch (Exception e) {
             System.out.println(e.getMessage());
+            return null;
         }
-
-        document.close();
-        return new File(dataDir+"/recette.pdf").exists();
     }
 }
