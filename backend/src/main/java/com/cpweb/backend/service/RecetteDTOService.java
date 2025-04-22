@@ -160,41 +160,61 @@ public class RecetteDTOService {
 
         List<Instruction> instructions = instructionRepository.findInstructionByRecette(recipe);
         List<Instruction> instructionsDTO = new ArrayList<>(recetteDTO.getEtapes());
-        if (!instructions.isEmpty() && instructions.size() == instructionsDTO.size()){
-            for (int i = 0; i < instructions.size(); i++){
-                Instruction instruction = instructions.get(i);
-                instruction.setDescription(instructionsDTO.get(i).getDescription());
+        if(!instructions.isEmpty()){
+            if(instructions.size() == instructionsDTO.size()){
+                for (int i = 0; i < instructions.size(); i++){
+                    Instruction instruction = instructions.get(i);
+                    instruction.setDescription(instructionsDTO.get(i).getDescription());
 
-                instructionRepository.save(instruction);
+                    instructionRepository.save(instruction);
+                }
+            } else {
+                instructionRepository.deleteAll(instructions);
+                for ( Instruction instruction : instructionsDTO){
+                    instruction.setRecette(recipe);
+                }
+
+                instructionRepository.saveAll(instructionsDTO);
+            }
+        }else{
+            if(!instructionsDTO.isEmpty()){
+                for (Instruction instruction : instructionsDTO){
+                    instruction.setRecette(recipe);
+                    instructionRepository.save(instruction);
+                }
             }
         }
 
-        if (instructionsDTO.size() > instructions.size()){
-            for (int i = instructions.size()-1; i < instructionsDTO.size(); i++) {
-                Instruction newInstruction = instructionsDTO.get(i);
-                newInstruction.setRecette(recipe);
-                instructionRepository.save(newInstruction);
-            }
-        }
 
         List<TagRecette> tags = tagRecetteRepository.findTagRecetteByRecette(recipe);
         List<Tag> tagsDTO = new ArrayList<>(recetteDTO.getSelectedTags());
-        if (!tags.isEmpty() && tags.size() == tagsDTO.size()){
-            for (int i = 0; i < tags.size(); i++){
-                TagRecette tagRecette = tags.get(i);
-                tagRecette.setTag(tagsDTO.get(i));
+        if(!tags.isEmpty()){
+            if(tags.size() == tagsDTO.size()){
+                for (int i = 0; i < tags.size(); i++){
+                    TagRecette tagRecette = tags.get(i);
+                    tagRecette.setTag(tagsDTO.get(i));
 
-                tagRecetteRepository.save(tagRecette);
+                    tagRecetteRepository.save(tagRecette);
+                }
+            } else {
+                tagRecetteRepository.deleteAll(tags);
+                for (Tag tag : tagsDTO){
+                    TagRecette tagRecette = new TagRecette();
+                    tagRecette.setRecette(recipe);
+                    tagRecette.setTag(tag);
+
+                    tagRecetteRepository.save(tagRecette);
+                }
             }
-        }
+        }else{
+            if(!tagsDTO.isEmpty()){
+                for (Tag tag : tagsDTO){
+                    TagRecette tagRecette = new TagRecette();
+                    tagRecette.setTag(tag);
+                    tagRecette.setRecette(recipe);
 
-        if (tagsDTO.size() > tags.size()){
-            for (int i = tags.size()-1; i <tagsDTO.size(); i++){
-                TagRecette tagRecette = new TagRecette();
-                tagRecette.setTag(tagsDTO.get(i));
-                tagRecette.setRecette(recipe);
-
-                tagRecetteRepository.save(tagRecette);
+                    tagRecetteRepository.save(tagRecette);
+                }
             }
         }
 
