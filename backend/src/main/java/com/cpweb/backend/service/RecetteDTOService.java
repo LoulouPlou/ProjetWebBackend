@@ -138,6 +138,7 @@ public class RecetteDTOService {
         Recette recipe = new Recette();
 
         recipe.setNomRecette(recetteDTO.getNomRecette());
+        recipe.setUser(recetteDTO.getUser());
         recipe.setCategorie(recetteDTO.getCategorie());
         recipe.setTempsPrep(recetteDTO.getTempsPrep());
         recipe.setTempsCuisson(recetteDTO.getTempsCuisson());
