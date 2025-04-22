@@ -1,5 +1,6 @@
 package com.cpweb.backend.models;
 
+
 public class InscriptionDTO {
     private UtilisateurDTO utilisateur;
     private IdentifiantDTO identifiant;

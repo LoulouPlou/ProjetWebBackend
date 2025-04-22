@@ -1,7 +1,5 @@
 package com.cpweb.backend.models;
 
-import jakarta.persistence.OneToOne;
-
 public class IdentifiantDTO {
     private Long id;
     private Utilisateur user;
