@@ -13,6 +13,7 @@ public class RecetteDTO {
     private String imageUrl;
     private Utilisateur user;
     private Categorie categorie;
+    private List<Tag> selectedTags = new ArrayList<>();
     private List<TagRecette> tags = new ArrayList<>();
     private List<IngredientRecetteDTO> ingredients = new ArrayList<>();
     private List<Instruction> etapes = new ArrayList<>();
@@ -72,6 +73,14 @@ public class RecetteDTO {
 
     public void setUser(Utilisateur user) {
         this.user = user;
+    }
+
+    public List<Tag> getSelectedTags() {
+        return selectedTags;
+    }
+
+    public void setSelectedTags(List<Tag> selectedTags) {
+        this.selectedTags = selectedTags;
     }
 
     public Categorie getCategorie() {

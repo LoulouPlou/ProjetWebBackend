@@ -33,7 +33,14 @@ public class RecetteController {
         return recetteDTOService.getAllRecipes();
     }
 
+    @GetMapping("/getRecipesByUserId/{id}")
+    @ResponseBody
+    public List<RecetteDTO> getAllRecipesByUserId(@PathVariable Long id){
+        return recetteDTOService.getRecipesByUserId(id);
+    }
+
     @GetMapping("/getRecipe/{id}")
+    @ResponseBody
     public RecetteDTO getRecipe(@PathVariable Long id){
         return recetteDTOService.getRecipeById(id);
     }
@@ -41,6 +48,16 @@ public class RecetteController {
     @PostMapping("/newRecipe")
     public Long createRecipe(@RequestBody RecetteDTO recetteDTO){
         return recetteDTOService.createRecipeAndDetailsFromRecipeDTO(recetteDTO);
+    }
+
+    @PutMapping("/updateRecipe")
+    public Long updateRecipe(@RequestBody RecetteDTO recetteDTO){
+        return recetteDTOService.updateRecipe(recetteDTO);
+    }
+
+    @DeleteMapping("/deleteRecipe/{id}")
+    public void deleteRecipe(@PathVariable Long id){
+        recetteDTOService.deleteRecipeByRecipeId(id);
     }
 
     @GetMapping("/getRecipePdf/{id}")

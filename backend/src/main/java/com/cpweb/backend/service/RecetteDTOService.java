@@ -25,8 +25,10 @@ public class RecetteDTOService {
 
     private final UniteRepository uniteRepository;
 
+    private final UtilisateurRepository utilisateurRepository;
 
-    public RecetteDTOService(RecetteRepository recetteRepository, TagRecetteRepository tagRecetteRepository, TagRepository tagRepository, IngredientRecetteRepository ingredientRecetteRepository, InstructionRepository instructionRepository, TagRepository tagRepository1, IngredientRepository ingredientRepository, CategorieRepository categorieRepository, UniteRepository uniteRepository) {
+
+    public RecetteDTOService(RecetteRepository recetteRepository, TagRecetteRepository tagRecetteRepository, TagRepository tagRepository, IngredientRecetteRepository ingredientRecetteRepository, InstructionRepository instructionRepository, TagRepository tagRepository1, IngredientRepository ingredientRepository, CategorieRepository categorieRepository, UniteRepository uniteRepository, UtilisateurRepository utilisateurRepository) {
         this.recetteRepository = recetteRepository;
         this.tagRecetteRepository = tagRecetteRepository;
         this.ingredientRecetteRepository = ingredientRecetteRepository;
@@ -35,6 +37,7 @@ public class RecetteDTOService {
         this.ingredientRepository = ingredientRepository;
         this.categorieRepository = categorieRepository;
         this.uniteRepository = uniteRepository;
+        this.utilisateurRepository = utilisateurRepository;
     }
 
     public Long createRecipeAndDetailsFromRecipeDTO(RecetteDTO recetteDTO) {
@@ -48,34 +51,17 @@ public class RecetteDTOService {
             instructionRepository.save(instruction);
         }
 
-        List<TagRecette> tags = new ArrayList<>(recetteDTO.getTags());
-        for (TagRecette tagRecette : tags){
+        List<Tag> tags = new ArrayList<>(recetteDTO.getSelectedTags());
+        for (Tag tag : tags){
+            TagRecette tagRecette = new TagRecette();
+            tagRecette.setTag(tag);
             tagRecette.setRecette(recipe);
 
             tagRecetteRepository.save(tagRecette);
         }
 
         List<IngredientRecetteDTO> ingredients = new ArrayList<>(recetteDTO.getIngredients());
-        for (IngredientRecetteDTO ingredient : ingredients) {
-            IngredientRecette recipeIngredient = new IngredientRecette();
-
-            Ingredient ingredientObject = ingredientRepository.findIngredientByIngredientNom(ingredient.getIngredientNom());
-
-            if (ingredientObject != null) {
-                recipeIngredient.setIngredient(ingredientObject);
-            } else {
-                Ingredient newIngredient = new Ingredient();
-                newIngredient.setIngredientNom(ingredient.getIngredientNom());
-                ingredientRepository.save(newIngredient);
-
-                recipeIngredient.setIngredient(newIngredient);
-            }
-
-            recipeIngredient.setQuantite(ingredient.getQuantite());
-            recipeIngredient.setUnite(uniteRepository.findUniteByUniteNom(ingredient.getUniteNom()));
-            recipeIngredient.setRecette(recipe);
-            ingredientRecetteRepository.save(recipeIngredient);
-        }
+        saveIngredientRecetteDTO(ingredients, recipe);
 
         return recipeId;
     }
@@ -87,7 +73,14 @@ public class RecetteDTOService {
         return transformRecipeListIntoRecipeDtoList(recipeList);
     }
 
-    public List<RecetteDTO> getAllRecipesByCategory(Categorie categorie){
+    public List<RecetteDTO> getRecipesByUserId(Long userId){
+
+        List<Recette> recipeList = recetteRepository.findRecetteByUser(utilisateurRepository.findUtilisateurById(userId));
+
+        return transformRecipeListIntoRecipeDtoList(recipeList);
+    }
+
+    public List<RecetteDTO> getRecipesByCategory(Categorie categorie){
 
         List<Recette> recipeList = recetteRepository.findRecetteByCategorie(categorie);
 
@@ -152,5 +145,97 @@ public class RecetteDTOService {
         recipe.setNbrPortion(recetteDTO.getNbrPortion());
 
         return recipe;
+    }
+
+    public Long updateRecipe(RecetteDTO recetteDTO){
+        Recette recipe = recetteRepository.findRecetteById(recetteDTO.getId());
+
+        recipe.setNomRecette(recetteDTO.getNomRecette());
+        recipe.setCategorie(recetteDTO.getCategorie());
+        recipe.setTempsPrep(recetteDTO.getTempsPrep());
+        recipe.setTempsCuisson(recetteDTO.getTempsCuisson());
+        recipe.setImageUrl(recetteDTO.getImageUrl());
+        recipe.setNbrPortion(recetteDTO.getNbrPortion());
+
+        List<Instruction> instructions = instructionRepository.findInstructionByRecette(recipe);
+        List<Instruction> instructionsDTO = new ArrayList<>(recetteDTO.getEtapes());
+        if (!instructions.isEmpty() && instructions.size() == instructionsDTO.size()){
+            for (int i = 0; i < instructions.size(); i++){
+                Instruction instruction = instructions.get(i);
+                instruction.setDescription(instructionsDTO.get(i).getDescription());
+
+                instructionRepository.save(instruction);
+            }
+        }
+
+        if (instructionsDTO.size() > instructions.size()){
+            for (int i = instructions.size()-1; i < instructionsDTO.size(); i++) {
+                Instruction newInstruction = instructionsDTO.get(i);
+                newInstruction.setRecette(recipe);
+                instructionRepository.save(newInstruction);
+            }
+        }
+
+        List<TagRecette> tags = tagRecetteRepository.findTagRecetteByRecette(recipe);
+        List<Tag> tagsDTO = new ArrayList<>(recetteDTO.getSelectedTags());
+        if (!tags.isEmpty() && tags.size() == tagsDTO.size()){
+            for (int i = 0; i < tags.size(); i++){
+                TagRecette tagRecette = tags.get(i);
+                tagRecette.setTag(tagsDTO.get(i));
+
+                tagRecetteRepository.save(tagRecette);
+            }
+        }
+
+        if (tagsDTO.size() > tags.size()){
+            for (int i = tags.size()-1; i <tagsDTO.size(); i++){
+                TagRecette tagRecette = new TagRecette();
+                tagRecette.setTag(tagsDTO.get(i));
+                tagRecette.setRecette(recipe);
+
+                tagRecetteRepository.save(tagRecette);
+            }
+        }
+
+        ingredientRecetteRepository.deleteAll(ingredientRecetteRepository.findIngredientRecetteByRecette(recipe));
+        List<IngredientRecetteDTO> ingredients = new ArrayList<>(recetteDTO.getIngredients());
+        saveIngredientRecetteDTO(ingredients, recipe);
+
+        return recipe.getId();
+    }
+
+    public void deleteRecipeByRecipeId(Long recipeId){
+        Recette recipe = recetteRepository.findRecetteById(recipeId);
+
+        if(recipe != null){
+            instructionRepository.deleteAll(instructionRepository.findInstructionByRecette(recipe));
+            ingredientRecetteRepository.deleteAll(ingredientRecetteRepository.findIngredientRecetteByRecette(recipe));
+            tagRecetteRepository.deleteAll(tagRecetteRepository.findTagRecetteByRecette(recipe));
+
+            recetteRepository.delete(recipe);
+        }
+    }
+
+    public void saveIngredientRecetteDTO(List<IngredientRecetteDTO> ingredients, Recette recipe){
+        for (IngredientRecetteDTO ingredient : ingredients) {
+            IngredientRecette recipeIngredient = new IngredientRecette();
+
+            Ingredient ingredientObject = ingredientRepository.findIngredientByIngredientNom(ingredient.getIngredientNom());
+
+            if (ingredientObject != null) {
+                recipeIngredient.setIngredient(ingredientObject);
+            } else {
+                Ingredient newIngredient = new Ingredient();
+                newIngredient.setIngredientNom(ingredient.getIngredientNom());
+                ingredientRepository.save(newIngredient);
+
+                recipeIngredient.setIngredient(newIngredient);
+            }
+
+            recipeIngredient.setQuantite(ingredient.getQuantite());
+            recipeIngredient.setUnite(uniteRepository.findUniteByUniteNom(ingredient.getUniteNom()));
+            recipeIngredient.setRecette(recipe);
+            ingredientRecetteRepository.save(recipeIngredient);
+        }
     }
 }
