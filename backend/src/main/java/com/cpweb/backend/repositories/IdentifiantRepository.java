@@ -5,7 +5,7 @@ import com.cpweb.backend.models.Utilisateur;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-
+@RepositoryRestResource(collectionResourceRel = "identifiant", path = "identifiant")
 public interface IdentifiantRepository extends JpaRepository<Identifiant, Long> {
 
 }

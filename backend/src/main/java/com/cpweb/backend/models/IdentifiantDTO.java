@@ -1,14 +1,9 @@
 package com.cpweb.backend.models;
 
-import jakarta.persistence.*;
+import jakarta.persistence.OneToOne;
 
-@Entity
-public class Identifiant {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class IdentifiantDTO {
     private Long id;
-    @OneToOne
     private Utilisateur user;
     private String courriel;
     private String motDePasse;
@@ -37,11 +32,4 @@ public class Identifiant {
         this.motDePasse = motDePasse;
     }
 
-    public Utilisateur getUser() {
-        return user;
-    }
-
-    public void setUser(Utilisateur user) {
-        this.user = user;
-    }
 }
