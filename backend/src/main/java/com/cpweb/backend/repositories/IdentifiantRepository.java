@@ -8,4 +8,6 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 @RepositoryRestResource(collectionResourceRel = "identifiant", path = "identifiant")
 public interface IdentifiantRepository extends JpaRepository<Identifiant, Long> {
 
+    public Identifiant findIdentifiantByCourriel(String courriel);
+
 }
