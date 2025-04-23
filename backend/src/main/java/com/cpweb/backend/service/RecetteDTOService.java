@@ -17,11 +17,7 @@ public class RecetteDTOService {
 
     private final InstructionRepository instructionRepository;
 
-    private final TagRepository tagRepository;
-
     private final IngredientRepository ingredientRepository;
-
-    private final CategorieRepository categorieRepository;
 
     private final UniteRepository uniteRepository;
 
@@ -33,9 +29,7 @@ public class RecetteDTOService {
         this.tagRecetteRepository = tagRecetteRepository;
         this.ingredientRecetteRepository = ingredientRecetteRepository;
         this.instructionRepository = instructionRepository;
-        this.tagRepository = tagRepository;
         this.ingredientRepository = ingredientRepository;
-        this.categorieRepository = categorieRepository;
         this.uniteRepository = uniteRepository;
         this.utilisateurRepository = utilisateurRepository;
     }
