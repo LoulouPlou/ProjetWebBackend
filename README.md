@@ -7,6 +7,16 @@ Flexi Food est une application web interactive et dynamique de recettes. Ce proj
 -	BDD : MariaDB, SGBDR, SQL
 -	API : Axios pour les requêtes http (https://dummyjson.com/recipes)
 
+  ## Dépendances 
+Dépendance Spring Boot Starter Security :
+```
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+```
+
+
 ## Architecture du projet
 ![architecture](https://github.com/user-attachments/assets/20ac08bd-5951-4aeb-a822-3e9ee5b40faa)
 
