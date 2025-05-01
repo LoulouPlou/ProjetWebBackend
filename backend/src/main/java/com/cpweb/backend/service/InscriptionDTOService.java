@@ -7,6 +7,7 @@ import com.cpweb.backend.models.Utilisateur;
 import com.cpweb.backend.models.UtilisateurDTO;
 import com.cpweb.backend.repositories.IdentifiantRepository;
 import com.cpweb.backend.repositories.UtilisateurRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,6 +21,8 @@ public class InscriptionDTOService {
         this.utilisateurRepository = utilisateurRepository;
     }
 
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
     public Long inscrireNouvelUtilisateur(InscriptionDTO inscriptionDTO){
         Utilisateur utilisateur = new Utilisateur();
         utilisateur.setNom(inscriptionDTO.getUtilisateur().getNom());
@@ -27,10 +30,9 @@ public class InscriptionDTOService {
         utilisateur.setNomAffichage(inscriptionDTO.getUtilisateur().getNomAffichage());
         utilisateur = utilisateurRepository.save(utilisateur);
 
-
         Identifiant idenifiant = new Identifiant();
         idenifiant.setCourriel(inscriptionDTO.getIdentifiant().getCourriel());
-        idenifiant.setMotDePasse(inscriptionDTO.getIdentifiant().getMotDePasse());
+        idenifiant.setMotDePasse(passwordEncoder.encode(inscriptionDTO.getIdentifiant().getMotDePasse()));
         idenifiant.setUser(utilisateur); //Relation
         identifiantRepository.save(idenifiant);
 
