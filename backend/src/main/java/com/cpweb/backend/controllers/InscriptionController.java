@@ -1,4 +1,4 @@
-package com.cpweb.backend.controllers;
+/*package com.cpweb.backend.controllers;
 
 import com.cpweb.backend.models.InscriptionDTO;
 import com.cpweb.backend.service.InscriptionDTOService;
@@ -21,4 +21,4 @@ public class InscriptionController {
     }
 
 
-}
+}*/

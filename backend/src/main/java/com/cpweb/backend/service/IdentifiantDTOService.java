@@ -1,3 +1,4 @@
+/*
 package com.cpweb.backend.service;
 
 import com.cpweb.backend.models.Identifiant;
@@ -39,4 +40,4 @@ public class IdentifiantDTOService {
     public List<Identifiant> insererListIdentifiant(List<Identifiant> liste){
         return identifiantRepository.saveAll(liste);
     }
-}
+}*/

@@ -1,4 +1,4 @@
-package com.cpweb.backend.service;
+/*package com.cpweb.backend.service;
 
 
 import com.cpweb.backend.models.Identifiant;
@@ -39,4 +39,4 @@ public class InscriptionDTOService {
         return utilisateur.getId();
 
     }
-}
+}*/

@@ -8,7 +8,6 @@ import com.cpweb.backend.models.Utilisateur;
 import com.cpweb.backend.repositories.IdentifiantRepository;
 import com.cpweb.backend.repositories.UtilisateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
