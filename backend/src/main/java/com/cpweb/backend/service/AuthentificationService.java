@@ -34,7 +34,7 @@ public class AuthentificationService {
     }
 
     public  ReponseAuthentificaton inscription(Inscription inscription){
-        if (!identifiantRepository.existsByCourriel(inscription.getCourriel())){
+        if (identifiantRepository.existsByCourriel(inscription.getCourriel())){
             return new ReponseAuthentificaton(false, "L'email existe déjas", null,null);
         }
 
@@ -49,6 +49,7 @@ public class AuthentificationService {
         identifiant.setUser(utilisateur);
 
         utilisateurRepository.save(utilisateur);
+        identifiantRepository.save(identifiant);
 
         return new ReponseAuthentificaton(true,"Un nouveau utilisateur a été créer avec succès!! Yippie", utilisateur.getId(), utilisateur.getNomAffichage());
     }
