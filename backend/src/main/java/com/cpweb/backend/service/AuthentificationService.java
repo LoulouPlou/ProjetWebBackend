@@ -4,7 +4,9 @@ import com.cpweb.backend.DTO.Connexion;
 import com.cpweb.backend.DTO.Inscription;
 import com.cpweb.backend.DTO.ReponseAuthentificaton;
 import com.cpweb.backend.models.Identifiant;
+import com.cpweb.backend.models.IdentifiantDTO;
 import com.cpweb.backend.models.Utilisateur;
+import com.cpweb.backend.models.UtilisateurDTO;
 import com.cpweb.backend.repositories.IdentifiantRepository;
 import com.cpweb.backend.repositories.UtilisateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,7 @@ public class AuthentificationService {
             return new ReponseAuthentificaton(false, "Le courriel est introuvable" ,null, null);
         }
 
+        //Ne fonctionne pas
 //        if (!PasswordEncoder.matches(Connexion.getMotDePasse(), identifiant.getMotDePasse())) {
 //            return new ReponseAuthentificaton(false, "Wrong password", null, null);
 //        }
@@ -52,5 +55,17 @@ public class AuthentificationService {
         identifiantRepository.save(identifiant);
 
         return new ReponseAuthentificaton(true,"Un nouveau utilisateur a été créer avec succès!! Yippie", utilisateur.getId(), utilisateur.getNomAffichage());
+    }
+
+    public Long updateProfil (IdentifiantDTO identifiantDTO, UtilisateurDTO utilisateurDTO){
+        Identifiant identifiant = identifiantRepository.findIdentifiantByCourriel(identifiantDTO.getCourriel());
+        Utilisateur utilisateur = utilisateurRepository.findUtilisateurById(utilisateurDTO.getId());
+
+        identifiant.setCourriel(identifiantDTO.getCourriel());
+        utilisateur.setNom(utilisateurDTO.getNom());
+        utilisateur.setPrenom(utilisateurDTO.getPrenom());
+        utilisateur.setNomAffichage(utilisateurDTO.getNomAffichage());
+
+        return utilisateur.getId();
     }
 }
