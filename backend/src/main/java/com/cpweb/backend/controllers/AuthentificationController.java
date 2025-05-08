@@ -3,6 +3,8 @@ package com.cpweb.backend.controllers;
 import com.cpweb.backend.DTO.Connexion;
 import com.cpweb.backend.DTO.Inscription;
 import com.cpweb.backend.DTO.ReponseAuthentificaton;
+import com.cpweb.backend.models.IdentifiantDTO;
+import com.cpweb.backend.models.UtilisateurDTO;
 import com.cpweb.backend.service.AuthentificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,5 +24,10 @@ public class AuthentificationController {
     @PostMapping("/inscription")
     public ReponseAuthentificaton inscription(@RequestBody Inscription inscription){
         return authentificationService.inscription(inscription);
+    }
+
+    @PutMapping("/updateProfil")
+    public Long updateProfil(@RequestBody IdentifiantDTO identifiantDTO, UtilisateurDTO utilisateurDTO){
+        return authentificationService.updateProfil(identifiantDTO, utilisateurDTO);
     }
 }
