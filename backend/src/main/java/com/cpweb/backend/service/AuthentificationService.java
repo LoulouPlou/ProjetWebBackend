@@ -57,15 +57,15 @@ public class AuthentificationService {
         return new ReponseAuthentificaton(true,"Un nouveau utilisateur a été créer avec succès!! Yippie", utilisateur.getId(), utilisateur.getNomAffichage());
     }
 
-    public Long updateProfil (IdentifiantDTO identifiantDTO, UtilisateurDTO utilisateurDTO){
-        Identifiant identifiant = identifiantRepository.findIdentifiantByCourriel(identifiantDTO.getCourriel());
+    public Long updateProfil (UtilisateurDTO utilisateurDTO){
         Utilisateur utilisateur = utilisateurRepository.findUtilisateurById(utilisateurDTO.getId());
 
-        identifiant.setCourriel(identifiantDTO.getCourriel());
         utilisateur.setNom(utilisateurDTO.getNom());
         utilisateur.setPrenom(utilisateurDTO.getPrenom());
         utilisateur.setNomAffichage(utilisateurDTO.getNomAffichage());
 
         return utilisateur.getId();
     }
+
+
 }

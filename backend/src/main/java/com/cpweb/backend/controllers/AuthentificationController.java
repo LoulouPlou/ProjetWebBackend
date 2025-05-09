@@ -27,7 +27,9 @@ public class AuthentificationController {
     }
 
     @PutMapping("/updateProfil")
-    public Long updateProfil(@RequestBody IdentifiantDTO identifiantDTO, UtilisateurDTO utilisateurDTO){
-        return authentificationService.updateProfil(identifiantDTO, utilisateurDTO);
+    public Long updateProfil(@RequestBody UtilisateurDTO utilisateurDTO){
+        return authentificationService.updateProfil( utilisateurDTO);
     }
+
+
 }
