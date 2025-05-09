@@ -1,5 +1,7 @@
 package com.cpweb.backend.models;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +15,8 @@ public class RecetteDTO {
     private String imageUrl;
     private Utilisateur user;
     private Categorie categorie;
+    private MultipartFile image;
+    private List<Tag> selectedTags = new ArrayList<>();
     private List<TagRecette> tags = new ArrayList<>();
     private List<IngredientRecetteDTO> ingredients = new ArrayList<>();
     private List<Instruction> etapes = new ArrayList<>();
@@ -74,12 +78,28 @@ public class RecetteDTO {
         this.user = user;
     }
 
+    public List<Tag> getSelectedTags() {
+        return selectedTags;
+    }
+
+    public void setSelectedTags(List<Tag> selectedTags) {
+        this.selectedTags = selectedTags;
+    }
+
     public Categorie getCategorie() {
         return categorie;
     }
 
     public void setCategorie(Categorie categorie) {
         this.categorie = categorie;
+    }
+
+    public MultipartFile getImage() {
+        return image;
+    }
+
+    public void setImage(MultipartFile image) {
+        this.image = image;
     }
 
     public List<TagRecette> getTags() {
