@@ -24,12 +24,6 @@ public class UtilisateurDTOService {
         return utilisateurId;
     }
 
-    public UtilisateurDTO getUtilisateurById(Long utilisateurId){
-        Utilisateur utilisateur =  utilisateurRepository.findUtilisateurById(utilisateurId);
-
-        return utilisateurToUtilisateurDTO(utilisateur);
-    }
-
     public UtilisateurDTO getUtilisateurByNomAffichage(String nomAffichage){
         Utilisateur utilisateur = utilisateurRepository.findUtilisateurByNomAffichage(nomAffichage);
 
@@ -57,4 +51,21 @@ public class UtilisateurDTOService {
 
         return utilisateur;
     }
+
+    public UtilisateurDTO getUtilisateurById(Long utilisateurId){
+        Utilisateur utilisateur = utilisateurRepository.findUtilisateurById(utilisateurId);
+
+        return utilisateurToUtilisateurDTO(utilisateur);
+    }
+
+    public Long updateProfil (UtilisateurDTO utilisateurDTO){
+        Utilisateur utilisateur = utilisateurRepository.findUtilisateurById(utilisateurDTO.getId());
+
+        utilisateur.setNom(utilisateurDTO.getNom());
+        utilisateur.setPrenom(utilisateurDTO.getPrenom());
+        utilisateur.setNomAffichage(utilisateurDTO.getNomAffichage());
+
+        return utilisateur.getId();
+    }
+
 }
