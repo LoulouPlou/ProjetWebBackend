@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/")
-@CrossOrigin()
+@RequestMapping("/utilisateur")
+@CrossOrigin(origins = "http://localhost:2267")
 public class UtilisateurController {
 
     @Autowired
@@ -23,7 +23,7 @@ public class UtilisateurController {
 
     @GetMapping("/getUser/{id}")
     @ResponseBody
-    public UtilisateurDTO getUtilisateurById(@PathVariable Long id){
+    public UtilisateurDTO getUtilisateur(@PathVariable Long id){
         return utilisateurDTOService.getUtilisateurById(id);
     }
 
@@ -33,13 +33,9 @@ public class UtilisateurController {
         return utilisateurDTOService.getUtilisateurByNomAffichage(nomAffichage);
     }
 
-
-    //Intéressant pour admin, mais manque de temps
-    /*
-    @GetMapping("/getAllUtilisateur")
-    @ResponseBody
-    public List<Utilisateur> getAllUtilisateur(){
-        return repo.findAll();
+    @PutMapping("/updateProfil")
+    public Long updateProfil(@RequestBody UtilisateurDTO utilisateurDTO){
+        return utilisateurDTOService.updateProfil( utilisateurDTO);
     }
-     */
+
 }
