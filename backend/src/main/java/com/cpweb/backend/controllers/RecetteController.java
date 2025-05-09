@@ -5,13 +5,16 @@ import com.cpweb.backend.models.RecetteDTO;
 import com.cpweb.backend.service.PdfService;
 import com.cpweb.backend.service.RecetteDTOService;
 import com.cpweb.backend.service.RecetteService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -46,12 +49,12 @@ public class RecetteController {
     }
 
     @PostMapping("/newRecipe")
-    public Long createRecipe(@RequestBody RecetteDTO recetteDTO){
+    public Long createRecipe(@RequestBody RecetteDTO recetteDTO) throws IOException {
         return recetteDTOService.createRecipeAndDetailsFromRecipeDTO(recetteDTO);
     }
 
     @PutMapping("/updateRecipe")
-    public Long updateRecipe(@RequestBody RecetteDTO recetteDTO){
+    public Long updateRecipe(@RequestBody RecetteDTO recetteDTO) throws IOException {
         return recetteDTOService.updateRecipe(recetteDTO);
     }
 
@@ -71,4 +74,24 @@ public class RecetteController {
 
         return ResponseEntity.ok().headers(headers).body(pdf);
     }
+
+    /*
+    @PostMapping("/newRecipe")
+    public Long createRecipe(@RequestBody RecetteDTO recetteDTO) throws IOException {
+        return recetteDTOService.createRecipeAndDetailsFromRecipeDTO(recetteDTO);
+    }
+
+    @PutMapping("/updateRecipe")
+    public ResponseEntity<Long> updateRecipe(@RequestParam("image") MultipartFile image, @RequestParam("recetteDTO") String recetteDTO) throws IOException {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            RecetteDTO recette = mapper.readValue(recetteDTO, RecetteDTO.class);
+            recette.setImage(image);
+            recetteDTOService.updateRecipe(recette);
+            return ResponseEntity.ok(recetteDTOService.updateRecipe(recette));
+        } catch (IOException e) {
+            return null;
+            //return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error uploading image");
+        }
+    }*/
 }

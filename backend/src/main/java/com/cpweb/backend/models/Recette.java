@@ -12,7 +12,8 @@ public class Recette {
     private Integer tempsPrep;
     private Integer tempsCuisson;
     private Integer nbrPortion;
-    private String imageUrl;
+    @OneToOne
+    private Image image;
     @ManyToOne
     private Utilisateur user;
     @ManyToOne
@@ -58,12 +59,12 @@ public class Recette {
         this.nbrPortion = nbrPortion;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public Image getImage() {
+        return image;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImage(Image image) {
+        this.image = image;
     }
 
     public Utilisateur getUser() {
