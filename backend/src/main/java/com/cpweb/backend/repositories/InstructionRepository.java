@@ -12,7 +12,7 @@ import java.util.List;
 public interface InstructionRepository extends JpaRepository<Instruction, Long> {
     public Instruction findInstructionById(long id);
 
-    public List<Instruction> findInstructionByRecette (Recette recette);
+    public List<Instruction> findInstructionByRecetteOrderByNumEtape (Recette recette);
 
     //public Instruction findInstructionByRecette (long id);
 

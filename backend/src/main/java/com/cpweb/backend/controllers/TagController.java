@@ -25,4 +25,9 @@ public class TagController {
     public void addTag(@RequestBody Tag tag){
         tagService.createTag(tag);
     }
+
+    @PutMapping("/updateTag")
+    public void updateTag(@RequestBody Tag tag){
+        tagService.updateTag(tag);
+    }
 }

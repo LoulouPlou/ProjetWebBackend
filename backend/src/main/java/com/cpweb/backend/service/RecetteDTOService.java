@@ -113,7 +113,7 @@ public class RecetteDTOService {
         //recipeWithDetails.setImage(recipe.getImage()); IMAGE AFFICHAGE TEST
         recipeWithDetails.setNbrPortion(recipe.getNbrPortion());
         recipeWithDetails.setTags(tagRecetteRepository.findTagRecetteByRecette(recipe));
-        recipeWithDetails.setEtapes(instructionRepository.findInstructionByRecette(recipe));
+        recipeWithDetails.setEtapes(instructionRepository.findInstructionByRecetteOrderByNumEtape(recipe));
 
         List<IngredientRecetteDTO> ingredientsDetails = new ArrayList<>();
         List<IngredientRecette> ingredientsRecipe = ingredientRecetteRepository.findIngredientRecetteByRecette(recipe);
@@ -157,7 +157,7 @@ public class RecetteDTOService {
         //recipe.setImage(saveImage(recetteDTO.getImage())); //IMAGE TEST
         recipe.setNbrPortion(recetteDTO.getNbrPortion());
 
-        List<Instruction> instructions = instructionRepository.findInstructionByRecette(recipe);
+        List<Instruction> instructions = instructionRepository.findInstructionByRecetteOrderByNumEtape(recipe);
         List<Instruction> instructionsDTO = new ArrayList<>(recetteDTO.getEtapes());
         if(!instructions.isEmpty()){
             if(instructions.size() == instructionsDTO.size()){
@@ -170,6 +170,7 @@ public class RecetteDTOService {
             } else {
                 instructionRepository.deleteAll(instructions);
                 for ( Instruction instruction : instructionsDTO){
+                    instruction.setId(null);
                     instruction.setRecette(recipe);
                 }
 
@@ -228,7 +229,7 @@ public class RecetteDTOService {
         Recette recipe = recetteRepository.findRecetteById(recipeId);
 
         if(recipe != null){
-            instructionRepository.deleteAll(instructionRepository.findInstructionByRecette(recipe));
+            instructionRepository.deleteAll(instructionRepository.findInstructionByRecetteOrderByNumEtape(recipe));
             ingredientRecetteRepository.deleteAll(ingredientRecetteRepository.findIngredientRecetteByRecette(recipe));
             tagRecetteRepository.deleteAll(tagRecetteRepository.findTagRecetteByRecette(recipe));
 

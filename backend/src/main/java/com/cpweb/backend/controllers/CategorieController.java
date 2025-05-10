@@ -26,4 +26,8 @@ public class CategorieController {
         categorieService.createCategory(categorie);
     }
 
+    @PutMapping("/updateCategorie")
+    public void updateCategorie(@RequestBody Categorie categorie){
+        categorieService.updateCategory(categorie);
+    }
 }

@@ -25,7 +25,7 @@ public class Tag {
         return tagNom;
     }
 
-    public void setTagNom(String tagName) {
+    public void setTagNom(String tagNom) {
         this.tagNom = tagNom;
     }
 }

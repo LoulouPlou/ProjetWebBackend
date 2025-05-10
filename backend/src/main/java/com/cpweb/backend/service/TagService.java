@@ -19,6 +19,11 @@ public class TagService {
     }
 
     public void createTag(Tag tag) {
+        tag.setId(null);
+        tagRepository.save(tag);
+    }
+
+    public void updateTag(Tag tag) {
         tagRepository.save(tag);
     }
 }
