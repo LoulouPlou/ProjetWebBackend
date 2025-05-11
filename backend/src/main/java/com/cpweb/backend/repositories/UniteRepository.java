@@ -9,5 +9,4 @@ public interface UniteRepository extends JpaRepository<Unite, Integer> {
 
     public Unite findUniteByUniteNom(String uniteNom);
 
-
 }

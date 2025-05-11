@@ -1,6 +1,9 @@
 INSERT INTO `utilisateur` (`id`, `nom`, `nom_affichage`, `prenom`)
 VALUES (1, 'Food', 'Flexi Food', 'Flexi');
 
+INSERT INTO `identifiant` (`id`, `user_id`, `courriel`, `mot_de_passe`)
+VALUES (1, 1, 'admin@flexifood.ca', 'chocolatine');
+
 INSERT INTO `categorie` (`id`, `categorie_nom`)
 VALUES (1, 'Boissons'),
        (2, 'Déjeuner'),

@@ -24,11 +24,9 @@ public class RecetteController {
 
     @Autowired
     RecetteDTOService recetteDTOService;
-    private final PdfService pdfService;
 
-    public RecetteController(PdfService pdfService) {
-        this.pdfService = pdfService;
-    }
+    @Autowired
+    PdfService pdfService;
 
     @GetMapping("/getAllRecipes")
     @ResponseBody
@@ -74,24 +72,4 @@ public class RecetteController {
 
         return ResponseEntity.ok().headers(headers).body(pdf);
     }
-
-    /*
-    @PostMapping("/newRecipe")
-    public Long createRecipe(@RequestBody RecetteDTO recetteDTO) throws IOException {
-        return recetteDTOService.createRecipeAndDetailsFromRecipeDTO(recetteDTO);
-    }
-
-    @PutMapping("/updateRecipe")
-    public ResponseEntity<Long> updateRecipe(@RequestParam("image") MultipartFile image, @RequestParam("recetteDTO") String recetteDTO) throws IOException {
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            RecetteDTO recette = mapper.readValue(recetteDTO, RecetteDTO.class);
-            recette.setImage(image);
-            recetteDTOService.updateRecipe(recette);
-            return ResponseEntity.ok(recetteDTOService.updateRecipe(recette));
-        } catch (IOException e) {
-            return null;
-            //return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error uploading image");
-        }
-    }*/
 }

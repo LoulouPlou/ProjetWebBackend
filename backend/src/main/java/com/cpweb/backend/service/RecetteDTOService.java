@@ -25,10 +25,8 @@ public class RecetteDTOService {
 
     private final UtilisateurRepository utilisateurRepository;
 
-    private final ImageRepository imageRepository;
 
-
-    public RecetteDTOService(RecetteRepository recetteRepository, TagRecetteRepository tagRecetteRepository, TagRepository tagRepository, IngredientRecetteRepository ingredientRecetteRepository, InstructionRepository instructionRepository, TagRepository tagRepository1, IngredientRepository ingredientRepository, CategorieRepository categorieRepository, UniteRepository uniteRepository, UtilisateurRepository utilisateurRepository, ImageRepository imageRepository) {
+    public RecetteDTOService(RecetteRepository recetteRepository, TagRecetteRepository tagRecetteRepository, TagRepository tagRepository, IngredientRecetteRepository ingredientRecetteRepository, InstructionRepository instructionRepository, TagRepository tagRepository1, IngredientRepository ingredientRepository, CategorieRepository categorieRepository, UniteRepository uniteRepository, UtilisateurRepository utilisateurRepository) {
         this.recetteRepository = recetteRepository;
         this.tagRecetteRepository = tagRecetteRepository;
         this.ingredientRecetteRepository = ingredientRecetteRepository;
@@ -36,7 +34,6 @@ public class RecetteDTOService {
         this.ingredientRepository = ingredientRepository;
         this.uniteRepository = uniteRepository;
         this.utilisateurRepository = utilisateurRepository;
-        this.imageRepository = imageRepository;
     }
 
     public Long createRecipeAndDetailsFromRecipeDTO(RecetteDTO recetteDTO) throws IOException {
@@ -110,8 +107,10 @@ public class RecetteDTOService {
         recipeWithDetails.setCategorie(recipe.getCategorie());
         recipeWithDetails.setTempsPrep(recipe.getTempsPrep());
         recipeWithDetails.setTempsCuisson(recipe.getTempsCuisson());
-        //recipeWithDetails.setImage(recipe.getImage()); IMAGE AFFICHAGE TEST
         recipeWithDetails.setNbrPortion(recipe.getNbrPortion());
+        if(recipe.getImage() != null){
+            recipeWithDetails.setImageId(recipe.getImage().getId());
+        }
         recipeWithDetails.setTags(tagRecetteRepository.findTagRecetteByRecette(recipe));
         recipeWithDetails.setEtapes(instructionRepository.findInstructionByRecetteOrderByNumEtape(recipe));
 
@@ -141,7 +140,6 @@ public class RecetteDTOService {
         recipe.setCategorie(recetteDTO.getCategorie());
         recipe.setTempsPrep(recetteDTO.getTempsPrep());
         recipe.setTempsCuisson(recetteDTO.getTempsCuisson());
-        //recipe.setImage(saveImage(recetteDTO.getImage())); //IMAGE TEST
         recipe.setNbrPortion(recetteDTO.getNbrPortion());
 
         return recipe;
@@ -154,7 +152,6 @@ public class RecetteDTOService {
         recipe.setCategorie(recetteDTO.getCategorie());
         recipe.setTempsPrep(recetteDTO.getTempsPrep());
         recipe.setTempsCuisson(recetteDTO.getTempsCuisson());
-        //recipe.setImage(saveImage(recetteDTO.getImage())); //IMAGE TEST
         recipe.setNbrPortion(recetteDTO.getNbrPortion());
 
         List<Instruction> instructions = instructionRepository.findInstructionByRecetteOrderByNumEtape(recipe);
@@ -259,15 +256,4 @@ public class RecetteDTOService {
             ingredientRecetteRepository.save(recipeIngredient);
         }
     }
-
-    /*
-    public Image saveImage(MultipartFile file) throws IOException {
-        Image img = new Image(file.getOriginalFilename(), file.getContentType(), file.getBytes());
-        return imageRepository.save(img);
-    }
-
-    public Image getImage(Long id) {
-        return imageRepository.findById(id).orElseThrow(() -> new RuntimeException("Image not found"));
-    }
-    */
 }

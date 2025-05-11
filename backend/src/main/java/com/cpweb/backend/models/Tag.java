@@ -1,9 +1,7 @@
 package com.cpweb.backend.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
 
 @Entity
 public class Tag {
@@ -12,6 +10,13 @@ public class Tag {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String tagNom;
+
+    public Tag() {}
+
+    public Tag(int id, String tagNom) {
+        this.id = id;
+        this.tagNom = tagNom;
+    }
 
     public Integer getId() {
         return id;
