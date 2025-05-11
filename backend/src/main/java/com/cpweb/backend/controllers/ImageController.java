@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/images")
+@RequestMapping("/api/images")
 @CrossOrigin
 public class ImageController {
 

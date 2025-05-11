@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/recette")
+@RequestMapping("/api/recette")
 @CrossOrigin()
 public class RecetteController {
 
