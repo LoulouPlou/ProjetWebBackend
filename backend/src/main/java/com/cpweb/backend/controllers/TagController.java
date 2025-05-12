@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/tag")
+@RequestMapping("api/tag")
 @CrossOrigin()
 public class TagController {
 
@@ -24,5 +24,10 @@ public class TagController {
     @PostMapping("/newTag")
     public void addTag(@RequestBody Tag tag){
         tagService.createTag(tag);
+    }
+
+    @PutMapping("/updateTag")
+    public void updateTag(@RequestBody Tag tag){
+        tagService.updateTag(tag);
     }
 }

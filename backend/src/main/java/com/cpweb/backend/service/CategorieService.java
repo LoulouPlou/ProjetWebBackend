@@ -16,6 +16,11 @@ public class CategorieService {
     }
 
     public void createCategory(Categorie categorie) {
+        categorie.setId(null);
+        categorieRepository.save(categorie);
+    }
+
+    public void updateCategory(Categorie categorie) {
         categorieRepository.save(categorie);
     }
 

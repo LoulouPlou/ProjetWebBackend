@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/categorie")
+@RequestMapping("api/categorie")
 @CrossOrigin()
 public class CategorieController {
 
@@ -26,4 +26,8 @@ public class CategorieController {
         categorieService.createCategory(categorie);
     }
 
+    @PutMapping("/updateCategorie")
+    public void updateCategorie(@RequestBody Categorie categorie){
+        categorieService.updateCategory(categorie);
+    }
 }

@@ -5,9 +5,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource(collectionResourceRel = "categorie", path = "categorie")
-public interface CategorieRepository extends JpaRepository<Categorie, Integer> {
-
-    public Categorie findCategorieById(int id);
-
-    public Categorie findCategorieByCategorieNom(String  categorieNom);
-}
+public interface CategorieRepository extends JpaRepository<Categorie, Integer> {}

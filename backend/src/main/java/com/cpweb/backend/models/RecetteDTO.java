@@ -15,7 +15,7 @@ public class RecetteDTO {
     private String imageUrl;
     private Utilisateur user;
     private Categorie categorie;
-    private MultipartFile image;
+    private Long imageId;
     private List<Tag> selectedTags = new ArrayList<>();
     private List<TagRecette> tags = new ArrayList<>();
     private List<IngredientRecetteDTO> ingredients = new ArrayList<>();
@@ -94,12 +94,12 @@ public class RecetteDTO {
         this.categorie = categorie;
     }
 
-    public MultipartFile getImage() {
-        return image;
+    public Long getImageId() {
+        return imageId;
     }
 
-    public void setImage(MultipartFile image) {
-        this.image = image;
+    public void setImageId(Long imageId) {
+        this.imageId = imageId;
     }
 
     public List<TagRecette> getTags() {

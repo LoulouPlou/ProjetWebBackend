@@ -14,8 +14,6 @@ import java.util.List;
 public interface RecetteRepository extends JpaRepository<Recette, Long> {
     public Recette findRecetteById(long id);
 
-    public Recette findRecetteByNomRecette(String nomRecette);
-
     public List<Recette> findRecetteByUser (Utilisateur utilisateur);
 
     public List<Recette> findRecetteByCategorie (Categorie categorie);
