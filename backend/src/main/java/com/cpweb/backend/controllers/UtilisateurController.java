@@ -1,11 +1,14 @@
 package com.cpweb.backend.controllers;
 
+import com.cpweb.backend.models.RecetteDTO;
 import com.cpweb.backend.models.Utilisateur;
 import com.cpweb.backend.models.UtilisateurDTO;
 import com.cpweb.backend.service.UtilisateurDTOService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -34,7 +37,7 @@ public class UtilisateurController {
     }
 
     @PutMapping("/updateProfil")
-    public Long updateProfil(@RequestBody UtilisateurDTO utilisateurDTO){
+    public Long updateProfil(@RequestBody UtilisateurDTO utilisateurDTO) throws IOException {
         return utilisateurDTOService.updateProfil( utilisateurDTO);
     }
 
