@@ -29,10 +29,7 @@ public class AuthentificationController {
         return authentificationService.inscription(inscription);
     }
 
-    @PutMapping("/updateProfil")
-    public Long updateProfil(@RequestBody UtilisateurDTO utilisateurDTO) throws IOException {
-        return authentificationService.updateProfil( utilisateurDTO);
-    }
+
 
 
 
