@@ -4,10 +4,13 @@ import com.cpweb.backend.DTO.Connexion;
 import com.cpweb.backend.DTO.Inscription;
 import com.cpweb.backend.DTO.ReponseAuthentificaton;
 import com.cpweb.backend.models.IdentifiantDTO;
+import com.cpweb.backend.models.RecetteDTO;
 import com.cpweb.backend.models.UtilisateurDTO;
 import com.cpweb.backend.service.AuthentificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping("api/authentification")
@@ -27,9 +30,11 @@ public class AuthentificationController {
     }
 
     @PutMapping("/updateProfil")
-    public Long updateProfil(@RequestBody UtilisateurDTO utilisateurDTO){
+    public Long updateProfil(@RequestBody UtilisateurDTO utilisateurDTO) throws IOException {
         return authentificationService.updateProfil( utilisateurDTO);
     }
+
+
 
 
 }
