@@ -11,6 +11,6 @@ import java.util.List;
 @RepositoryRestResource(collectionResourceRel = "tagrecette", path = "tagrecette")
 public interface TagRecetteRepository extends JpaRepository<TagRecette, Long> {
 
-    public List<TagRecette> findTagRecetteByRecette(Recette recette);
+    List<TagRecette> findTagRecetteByRecette(Recette recette);
 
 }

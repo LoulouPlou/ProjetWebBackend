@@ -3,7 +3,6 @@ package com.cpweb.backend.service;
 import com.cpweb.backend.models.*;
 import com.cpweb.backend.repositories.*;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,6 +23,7 @@ public class RecetteDTOService {
     private final UniteRepository uniteRepository;
 
     private final UtilisateurRepository utilisateurRepository;
+    private final CategorieRepository categorieRepository;
 
 
     public RecetteDTOService(RecetteRepository recetteRepository, TagRecetteRepository tagRecetteRepository, TagRepository tagRepository, IngredientRecetteRepository ingredientRecetteRepository, InstructionRepository instructionRepository, TagRepository tagRepository1, IngredientRepository ingredientRepository, CategorieRepository categorieRepository, UniteRepository uniteRepository, UtilisateurRepository utilisateurRepository) {
@@ -34,6 +34,7 @@ public class RecetteDTOService {
         this.ingredientRepository = ingredientRepository;
         this.uniteRepository = uniteRepository;
         this.utilisateurRepository = utilisateurRepository;
+        this.categorieRepository = categorieRepository;
     }
 
     public Long createRecipeAndDetailsFromRecipeDTO(RecetteDTO recetteDTO) throws IOException {
@@ -76,7 +77,8 @@ public class RecetteDTOService {
         return transformRecipeListIntoRecipeDtoList(recipeList);
     }
 
-    public List<RecetteDTO> getRecipesByCategory(Categorie categorie){
+    public List<RecetteDTO> getRecipesByCategory(Integer categoryId){
+        Categorie categorie = categorieRepository.getCategorieById(categoryId);
 
         List<Recette> recipeList = recetteRepository.findRecetteByCategorie(categorie);
 

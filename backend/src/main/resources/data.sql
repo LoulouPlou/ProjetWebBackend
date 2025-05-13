@@ -217,7 +217,7 @@ VALUES (4, 4, 15, 20, 1, 1, 1, 'Pizza Margherita'),
        (4, 4, 20, 15, 4, 1, 4, 'Pâtes au poulet Alfredo'),
        (4, 3, 25, 15, 5, 1, 5, 'Poulet à la salsa de mangue'),
        (4, 4, 15, 20, 6, 1, NULL, 'Salade de quinoa à l\'avocat'),
-       (4, 4, 15, 20, 7, 1, 7, 'Bruschetta aux tomates et au basilic'),
+       (3, 4, 15, 20, 7, 1, 7, 'Bruschetta aux tomates et au basilic'),
        (4, 4, 15, 20, 8, 1, 8, 'Sauté de bœuf et de brocoli'),
        (3, 2, 0, 10, 9, 1, 9, 'Salade Caprese'),
        (4, 3, 20, 15, 10, 1, 10, 'Pâtes aux crevettes et aux scampis'),
@@ -235,12 +235,12 @@ VALUES (4, 4, 15, 20, 1, 1, 1, 'Pizza Margherita'),
        (5, 2, 0, 10, 22, 1, 22, 'Lassi à la mangue'),
        (5, 6, 0, 30, 23, 1, 23, 'Tiramisu italien'),
        (4, 4, 15, 25, 24, 1, NULL, 'Kebabs turcs'),
-       (1, 1, 0, 10, 25, 1, 25, 'Smoothie aux myrtilles et à la banane'),
+       (2, 1, 0, 10, 25, 1, 25, 'Smoothie aux myrtilles et à la banane'),
        (4, 4, 15, 15, 26, 1, 26, 'Maïs de rue mexicain (Elote)'),
        (4, 6, 40, 30, 27, 1, 27, 'Bortsch russe'),
        (4, 4, 20, 40, 28, 1, 28, 'Masala Dosa du sud de l\'Inde'),
        (4, 2, 10, 15, 29, 1, 29, 'Wrap de falafel libanais'),
-       (4, 1, 0, 5, 30, 1, 30, 'Caipirinha razilienne');
+       (1, 1, 0, 5, 30, 1, 30, 'Caipirinha razilienne');
 
 
 INSERT INTO `instruction` (`num_etape`, `id`, `recette_id`, `description`)

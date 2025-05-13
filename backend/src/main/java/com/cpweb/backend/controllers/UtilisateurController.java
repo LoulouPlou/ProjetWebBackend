@@ -1,15 +1,11 @@
 package com.cpweb.backend.controllers;
 
-import com.cpweb.backend.models.RecetteDTO;
-import com.cpweb.backend.models.Utilisateur;
 import com.cpweb.backend.models.UtilisateurDTO;
 import com.cpweb.backend.service.UtilisateurDTOService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.List;
 
 @RestController
 @RequestMapping("api/utilisateur")

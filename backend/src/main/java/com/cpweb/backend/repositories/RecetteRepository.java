@@ -12,10 +12,10 @@ import java.util.List;
 
 @RepositoryRestResource(collectionResourceRel = "recette", path = "recette")
 public interface RecetteRepository extends JpaRepository<Recette, Long> {
-    public Recette findRecetteById(long id);
+    Recette findRecetteById(long id);
 
-    public List<Recette> findRecetteByUser (Utilisateur utilisateur);
+    List<Recette> findRecetteByUser(Utilisateur utilisateur);
 
-    public List<Recette> findRecetteByCategorie (Categorie categorie);
+    List<Recette> findRecetteByCategorie(Categorie categorie);
 
 }

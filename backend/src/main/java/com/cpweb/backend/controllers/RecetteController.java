@@ -1,18 +1,14 @@
 package com.cpweb.backend.controllers;
 
-import com.cpweb.backend.models.Recette;
 import com.cpweb.backend.models.RecetteDTO;
 import com.cpweb.backend.service.PdfService;
 import com.cpweb.backend.service.RecetteDTOService;
-import com.cpweb.backend.service.RecetteService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -38,6 +34,12 @@ public class RecetteController {
     @ResponseBody
     public List<RecetteDTO> getAllRecipesByUserId(@PathVariable Long id){
         return recetteDTOService.getRecipesByUserId(id);
+    }
+
+    @GetMapping("/getRecipesByCategorie/{id}")
+    @ResponseBody
+    public List<RecetteDTO> getAllRecipesByCategorieId(@PathVariable Integer id){
+        return recetteDTOService.getRecipesByCategory(id);
     }
 
     @GetMapping("/getRecipe/{id}")
@@ -67,7 +69,7 @@ public class RecetteController {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_PDF);
-        //changer nom
+
         headers.setContentDisposition(ContentDisposition.inline().filename("recipe.pdf").build());
 
         return ResponseEntity.ok().headers(headers).body(pdf);
