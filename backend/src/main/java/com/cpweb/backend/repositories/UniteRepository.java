@@ -7,6 +7,6 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 @RepositoryRestResource(collectionResourceRel = "unite", path = "unite")
 public interface UniteRepository extends JpaRepository<Unite, Integer> {
 
-    public Unite findUniteByUniteNom(String uniteNom);
+    Unite findUniteByUniteNom(String uniteNom);
 
 }

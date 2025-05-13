@@ -23,7 +23,10 @@ public class RecetteDTOService {
     private final UniteRepository uniteRepository;
 
     private final UtilisateurRepository utilisateurRepository;
+
     private final CategorieRepository categorieRepository;
+
+    private final TagRepository tagRepository;
 
 
     public RecetteDTOService(RecetteRepository recetteRepository, TagRecetteRepository tagRecetteRepository, TagRepository tagRepository, IngredientRecetteRepository ingredientRecetteRepository, InstructionRepository instructionRepository, TagRepository tagRepository1, IngredientRepository ingredientRepository, CategorieRepository categorieRepository, UniteRepository uniteRepository, UtilisateurRepository utilisateurRepository) {
@@ -35,6 +38,7 @@ public class RecetteDTOService {
         this.uniteRepository = uniteRepository;
         this.utilisateurRepository = utilisateurRepository;
         this.categorieRepository = categorieRepository;
+        this.tagRepository = tagRepository;
     }
 
     public Long createRecipeAndDetailsFromRecipeDTO(RecetteDTO recetteDTO) throws IOException {
@@ -81,6 +85,18 @@ public class RecetteDTOService {
         Categorie categorie = categorieRepository.getCategorieById(categoryId);
 
         List<Recette> recipeList = recetteRepository.findRecetteByCategorie(categorie);
+
+        return transformRecipeListIntoRecipeDtoList(recipeList);
+    }
+
+    public List<RecetteDTO> getRecipesByTag(Integer tagId){
+        Tag tag = tagRepository.findTagById(tagId);
+        List<TagRecette> tagRecetteByTag = tagRecetteRepository.findTagRecetteByTag(tag);
+
+        List<Recette> recipeList = new ArrayList<>();
+        for (TagRecette tagRecette : tagRecetteByTag){
+            recipeList.add(recetteRepository.findRecetteById(tagRecette.getRecette().getId()));
+        }
 
         return transformRecipeListIntoRecipeDtoList(recipeList);
     }

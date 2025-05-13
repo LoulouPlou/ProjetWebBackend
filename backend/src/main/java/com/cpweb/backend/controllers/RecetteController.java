@@ -42,6 +42,12 @@ public class RecetteController {
         return recetteDTOService.getRecipesByCategory(id);
     }
 
+    @GetMapping("/getRecipesByTag/{id}")
+    @ResponseBody
+    public List<RecetteDTO> getRecipesByTag(@PathVariable Integer id){
+        return recetteDTOService.getRecipesByTag(id);
+    }
+
     @GetMapping("/getRecipe/{id}")
     @ResponseBody
     public RecetteDTO getRecipe(@PathVariable Long id){
