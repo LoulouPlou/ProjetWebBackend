@@ -1,13 +1,10 @@
 package com.cpweb.backend.service;
 import com.cpweb.backend.models.*;
-import com.cpweb.backend.repositories.*;
 
 import com.cpweb.backend.repositories.UtilisateurRepository;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class UtilisateurDTOService {
@@ -22,7 +19,7 @@ public class UtilisateurDTOService {
     public Long createUser(UtilisateurDTO utilisateurDTO){
         Utilisateur utilisateur = utilisateurDTOToUtilisateur(utilisateurDTO);
         Long utilisateurId = utilisateurRepository.save(utilisateur).getId();
-        utilisateur = utilisateurRepository.findUtilisateurById(utilisateurId);
+        /*utilisateur = utilisateurRepository.findUtilisateurById(utilisateurId);*/
 
         return utilisateurId;
     }
@@ -63,8 +60,6 @@ public class UtilisateurDTOService {
 
     public Long updateProfil (UtilisateurDTO utilisateurDTO) throws IOException {
         Utilisateur utilisateur = utilisateurRepository.findUtilisateurById(utilisateurDTO.getId());
-
-
 
         utilisateur.setNom(utilisateurDTO.getNom());
         utilisateur.setPrenom(utilisateurDTO.getPrenom());

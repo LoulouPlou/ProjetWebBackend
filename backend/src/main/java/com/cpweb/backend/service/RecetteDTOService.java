@@ -3,7 +3,6 @@ package com.cpweb.backend.service;
 import com.cpweb.backend.models.*;
 import com.cpweb.backend.repositories.*;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,6 +24,10 @@ public class RecetteDTOService {
 
     private final UtilisateurRepository utilisateurRepository;
 
+    private final CategorieRepository categorieRepository;
+
+    private final TagRepository tagRepository;
+
 
     public RecetteDTOService(RecetteRepository recetteRepository, TagRecetteRepository tagRecetteRepository, TagRepository tagRepository, IngredientRecetteRepository ingredientRecetteRepository, InstructionRepository instructionRepository, TagRepository tagRepository1, IngredientRepository ingredientRepository, CategorieRepository categorieRepository, UniteRepository uniteRepository, UtilisateurRepository utilisateurRepository) {
         this.recetteRepository = recetteRepository;
@@ -34,6 +37,8 @@ public class RecetteDTOService {
         this.ingredientRepository = ingredientRepository;
         this.uniteRepository = uniteRepository;
         this.utilisateurRepository = utilisateurRepository;
+        this.categorieRepository = categorieRepository;
+        this.tagRepository = tagRepository;
     }
 
     public Long createRecipeAndDetailsFromRecipeDTO(RecetteDTO recetteDTO) throws IOException {
@@ -76,9 +81,22 @@ public class RecetteDTOService {
         return transformRecipeListIntoRecipeDtoList(recipeList);
     }
 
-    public List<RecetteDTO> getRecipesByCategory(Categorie categorie){
+    public List<RecetteDTO> getRecipesByCategory(Integer categoryId){
+        Categorie categorie = categorieRepository.getCategorieById(categoryId);
 
         List<Recette> recipeList = recetteRepository.findRecetteByCategorie(categorie);
+
+        return transformRecipeListIntoRecipeDtoList(recipeList);
+    }
+
+    public List<RecetteDTO> getRecipesByTag(Integer tagId){
+        Tag tag = tagRepository.findTagById(tagId);
+        List<TagRecette> tagRecetteByTag = tagRecetteRepository.findTagRecetteByTag(tag);
+
+        List<Recette> recipeList = new ArrayList<>();
+        for (TagRecette tagRecette : tagRecetteByTag){
+            recipeList.add(recetteRepository.findRecetteById(tagRecette.getRecette().getId()));
+        }
 
         return transformRecipeListIntoRecipeDtoList(recipeList);
     }

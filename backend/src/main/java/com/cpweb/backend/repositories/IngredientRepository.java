@@ -7,6 +7,6 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 @RepositoryRestResource(collectionResourceRel = "ingredient", path = "ingredient")
 public interface IngredientRepository extends JpaRepository<Ingredient, Long> {
 
-    public Ingredient findIngredientByIngredientNom(String nom);
+    Ingredient findIngredientByIngredientNom(String nom);
 
 }

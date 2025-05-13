@@ -21,6 +21,12 @@ public class CategorieController {
         return categorieService.getAllCategories();
     }
 
+    @GetMapping("/getCategorie/{id}")
+    @ResponseBody
+    public Categorie getCategorieById(@PathVariable Integer id){
+        return categorieService.getCategorieById(id);
+    }
+
     @PostMapping("/newCategorie")
     public void newCategorie(@RequestBody Categorie categorie){
         categorieService.createCategory(categorie);
