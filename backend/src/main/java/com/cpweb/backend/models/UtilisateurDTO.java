@@ -37,4 +37,13 @@ public class UtilisateurDTO {
     public void setNomAffichage(String nomAffichage) {
         this.nomAffichage = nomAffichage;
     }
+
+    public UtilisateurDTO(){}
+
+    public UtilisateurDTO(long id, String prenom, String nom, String nomAffichage){
+        this.id = id;
+        this.prenom = prenom;
+        this.nom = nom;
+        this.nomAffichage = nomAffichage;
+    }
 }

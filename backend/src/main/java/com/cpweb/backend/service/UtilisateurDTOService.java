@@ -5,6 +5,7 @@ import com.cpweb.backend.repositories.UtilisateurRepository;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
 
 @Service
 public class UtilisateurDTOService {
@@ -56,6 +57,10 @@ public class UtilisateurDTOService {
         Utilisateur utilisateur = utilisateurRepository.findUtilisateurById(utilisateurId);
 
         return utilisateurToUtilisateurDTO(utilisateur);
+    }
+
+    public List<Utilisateur> getAllUsers() {
+        return utilisateurRepository.findAll();
     }
 
     public Long updateProfil (UtilisateurDTO utilisateurDTO) throws IOException {
