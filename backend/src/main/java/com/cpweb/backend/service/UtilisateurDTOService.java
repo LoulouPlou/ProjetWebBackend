@@ -59,9 +59,7 @@ public class UtilisateurDTOService {
         return utilisateurToUtilisateurDTO(utilisateur);
     }
 
-    public List<Utilisateur> getAllUsers() {
-        return utilisateurRepository.findAll();
-    }
+
 
     public Long updateProfil (UtilisateurDTO utilisateurDTO) throws IOException {
         Utilisateur utilisateur = utilisateurRepository.findUtilisateurById(utilisateurDTO.getId());
