@@ -17,4 +17,5 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long> 
     public Utilisateur findUtilisateurByNomAffichage(String nomAffichage);
 
 
+    Object getUtilisateursById(Long id);
 }

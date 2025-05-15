@@ -25,6 +25,11 @@ public class AuthentificationService {
             return new ReponseAuthentificaton(false, "Le courriel est introuvable" ,null, null);
         }
 
+        if(!connexion.getMotDePasse().equals(identifiant.getMotDePasse())){
+            return new ReponseAuthentificaton(false, "Mot de passe incorrect", null, null);
+        }
+
+
         return new ReponseAuthentificaton(true, "Connexion réussie", identifiant.getUser().getId(),identifiant.getUser().getNomAffichage());
     }
 
