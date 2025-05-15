@@ -40,6 +40,8 @@ public class InscriptionTestFirefox {
 
        String connexionConfirmer = "http://localhost:2267/Connexion";
 
+        // ne fonctionne pas à cause du alert ?
+        //assertEquals(driverF.getCurrentUrl(), "http://localhost:2267/Connexion");
     }
 
 

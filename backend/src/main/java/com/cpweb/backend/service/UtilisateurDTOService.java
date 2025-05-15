@@ -5,7 +5,6 @@ import com.cpweb.backend.repositories.UtilisateurRepository;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.List;
 
 @Service
 public class UtilisateurDTOService {
@@ -20,7 +19,6 @@ public class UtilisateurDTOService {
     public Long createUser(UtilisateurDTO utilisateurDTO){
         Utilisateur utilisateur = utilisateurDTOToUtilisateur(utilisateurDTO);
         Long utilisateurId = utilisateurRepository.save(utilisateur).getId();
-        /*utilisateur = utilisateurRepository.findUtilisateurById(utilisateurId);*/
 
         return utilisateurId;
     }
